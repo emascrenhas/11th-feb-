@@ -15,14 +15,13 @@
     body {
       margin: 0;
       padding: 0;
-      background: #2b1d14;
+      background: radial-gradient(circle at top, #3a2619, #1b100a);
       font-family: "Inter", sans-serif;
       overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      color: #2a1b12;
     }
 
     /* ---------- COVER SCREEN ---------- */
@@ -64,7 +63,7 @@
 
     .cover-title {
       font-family: "Homemade Apple", cursive;
-      font-size: 1.9rem;
+      font-size: 2rem;
       color: #f4d7a4;
       z-index: 2;
       margin-bottom: 10px;
@@ -117,13 +116,13 @@
     .page {
       position: relative;
       overflow: hidden;
-      border-radius: 12px;
+      border-radius: 14px;
       box-shadow:
-        0px 12px 28px rgba(0,0,0,0.35),
-        inset 0px 0px 20px rgba(0,0,0,0.08);
+        0px 16px 38px rgba(0,0,0,0.50),
+        inset 0px 0px 18px rgba(0,0,0,0.10);
     }
 
-    /* ---------- COVER PAGE ---------- */
+    /* ---------- COVER PAGE (NOT ruled) ---------- */
     .page.cover-page {
       background: linear-gradient(145deg, #5a2f1a, #2d140a);
       border: 2px solid rgba(255,255,255,0.12);
@@ -134,7 +133,7 @@
       position: absolute;
       inset: 0;
       background: url("https://www.transparenttextures.com/patterns/leather.png");
-      opacity: 0.28;
+      opacity: 0.30;
       pointer-events: none;
     }
 
@@ -142,63 +141,76 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at top, rgba(255,255,255,0.12), transparent 60%);
-      opacity: 0.4;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.14), transparent 65%);
+      opacity: 0.55;
       pointer-events: none;
     }
 
-    /* ---------- INSIDE PAGES ---------- */
+    /* ---------- INSIDE PAGES (REAL DIARY PAPER) ---------- */
     .page.inner-page {
-      background: #fff8e8;
+      background: linear-gradient(to bottom, #fffdf5, #f7f1e1);
       border: 1px solid rgba(0,0,0,0.14);
     }
 
-    /* paper texture */
+    /* paper fiber texture */
     .page.inner-page::before {
       content: "";
       position: absolute;
       inset: 0;
       background: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-      opacity: 0.35;
+      opacity: 0.42;
       pointer-events: none;
     }
 
-    /* ruled lines + margin line */
+    /* page edge shading realism */
     .page.inner-page::after {
       content: "";
       position: absolute;
       inset: 0;
+      background:
+        radial-gradient(circle at left, rgba(0,0,0,0.08), transparent 45%),
+        radial-gradient(circle at right, rgba(0,0,0,0.07), transparent 45%),
+        radial-gradient(circle at bottom, rgba(0,0,0,0.10), transparent 60%);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    /* ---------- RULED LINES + MARGINS ---------- */
+    .ruled-lines {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 1;
       background-image:
         repeating-linear-gradient(
           to bottom,
-          rgba(0, 120, 160, 0.20) 0px,
-          rgba(0, 120, 160, 0.20) 1px,
+          rgba(0, 120, 160, 0.22) 0px,
+          rgba(0, 120, 160, 0.22) 1px,
           transparent 1px,
-          transparent 30px
+          transparent 32px
         ),
         linear-gradient(
           to right,
-          rgba(220, 60, 60, 0.35) 2px,
+          rgba(220, 60, 60, 0.30) 2px,
           transparent 2px
         );
-      background-size: 100% 30px, 2px 100%;
-      background-position: 0px 105px, 60px 0px;
-      pointer-events: none;
-      opacity: 1;
+      background-size: 100% 32px, 2px 100%;
+      background-position: 0px 115px, 65px 0px;
     }
 
-    /* ---------- PAGE INNER (REAL MARGINS) ---------- */
+    /* ---------- PAGE INNER CONTENT ---------- */
     .page-inner {
       height: 100%;
       box-sizing: border-box;
       position: relative;
       z-index: 5;
 
-      /* REALISTIC DIARY MARGINS */
-      padding: 110px 40px 80px;
+      /* IMPORTANT: TOP & BOTTOM MARGINS */
+      padding: 110px 35px 85px 85px;
     }
 
-    /* cover inner */
+    /* ---------- COVER INNER ---------- */
     .cover-inner {
       height: 100%;
       display: flex;
@@ -227,7 +239,7 @@
       font-family: "Homemade Apple", cursive;
       font-size: 1.35rem;
       margin-bottom: 18px;
-      color: rgba(25, 15, 10, 0.92);
+      color: rgba(20, 12, 10, 0.95);
     }
 
     .page-text {
@@ -237,6 +249,7 @@
       color: rgba(20, 12, 10, 0.92);
       white-space: pre-line;
 
+      /* ink pen realism */
       text-shadow:
         0px 0px 0.8px rgba(0,0,0,0.25),
         0px 0px 1.4px rgba(0,0,0,0.12);
@@ -245,66 +258,81 @@
     /* watermark */
     .watermark {
       position: absolute;
-      top: 18px;
-      right: 18px;
+      top: 22px;
+      right: 22px;
       font-family: "Homemade Apple", cursive;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       opacity: 0.22;
-      color: rgba(0, 60, 120, 0.55);
+      color: rgba(0, 60, 120, 0.60);
       pointer-events: none;
-      z-index: 6;
+      z-index: 10;
+      transform: rotate(-2deg);
     }
 
     /* page number */
     .page-number {
       position: absolute;
-      bottom: 16px;
-      right: 18px;
+      bottom: 22px;
+      right: 26px;
       font-family: "Inter", sans-serif;
-      font-size: 0.8rem;
-      opacity: 0.55;
-      color: rgba(0, 0, 0, 0.7);
+      font-size: 0.82rem;
+      opacity: 0.65;
+      color: rgba(0, 0, 0, 0.72);
       pointer-events: none;
-      z-index: 6;
+      z-index: 10;
     }
 
-    /* doodle svg */
+    /* ---------- DOODLES (BLUE INK SVG) ---------- */
     .doodle-svg {
       position: absolute;
-      width: 80px;
-      height: 80px;
-      opacity: 0.60;
+      opacity: 0.75;
       pointer-events: none;
       z-index: 4;
-      stroke: rgba(0, 70, 150, 0.9);
+      stroke: rgba(0, 70, 150, 0.88);
       fill: none;
-      stroke-width: 2.1;
+      stroke-width: 2.2;
       stroke-linecap: round;
       stroke-linejoin: round;
-      filter: drop-shadow(0px 0px 0.8px rgba(0,0,0,0.1));
+      filter: drop-shadow(0px 0px 0.8px rgba(0,0,0,0.10));
     }
 
     /* ink smudge */
     .ink-smudge {
       position: absolute;
-      width: 140px;
-      height: 110px;
-      background: radial-gradient(circle, rgba(0,70,150,0.18), transparent 70%);
+      width: 160px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(0,70,150,0.22), transparent 70%);
       opacity: 0.12;
       border-radius: 50%;
       pointer-events: none;
       z-index: 2;
-      transform: rotate(-12deg);
+      transform: rotate(-10deg);
     }
 
-    /* mobile */
+    /* tiny pen marks */
+    .pen-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(0, 70, 150, 0.40);
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* ---------- MOBILE ---------- */
     @media(max-width: 600px) {
+      .book-wrapper {
+        height: 560px;
+      }
+
       .page-inner {
-        padding: 105px 26px 75px;
+        padding: 110px 22px 85px 70px;
       }
 
       .page-text {
-        font-size: 0.98rem;
+        font-size: 1rem;
       }
     }
 
@@ -385,93 +413,91 @@
     const music = document.getElementById("bgMusic");
 
     const pages = [
-      { title: "", text: "", layout: "cover" },
-      { title: "Promise Diary", text: `For Ruchi ❤️\n\n— Yours, Yash`, type: "cover" },
+      { layout: "cover" },
 
-      { title: "Promise #1", text: `Ruchi... I promise I’ll always choose you. Even in chaos. Even in silence. Even in the hardest days. Always you.` },
+      { title: "Promise Diary", text: `For Ruchi ❤️\n\n— Yours, Yash`, layout: "inner" },
 
-      { title: "Promise #2", text: `I promise to always listen. Not just to your words... But to your moods. Your eyes. Your silence. Because you deserve to be understood.` },
+      { title: "Promise #1", text: `Ruchi... I promise I’ll always choose you. Even in chaos. Even in silence. Even in the hardest days. Always you.`, layout: "inner" },
 
-      { title: "Promise #3", text: `Ruchi, I promise to make you laugh. Even when life feels heavy. And yes... I’ll annoy you a little too 😌❤️` },
+      { title: "Promise #2", text: `I promise to always listen. Not just to your words... But to your moods. Your eyes. Your silence. Because you deserve to be understood.`, layout: "inner" },
 
-      { title: "Promise #4", text: `I promise to be proud of you. In every phase. In every version. Even when you doubt yourself... I won’t.` },
+      { title: "Promise #3", text: `Ruchi, I promise to make you laugh. Even when life feels heavy. And yes... I’ll annoy you a little too 😌❤️`, layout: "inner" },
 
-      { title: "Promise #5", text: `I promise to protect your peace. Not by controlling your world... But by being the calm inside it.` },
+      { title: "Promise #4", text: `I promise to be proud of you. In every phase. In every version. Even when you doubt yourself... I won’t.`, layout: "inner" },
 
-      { title: "Promise #6", text: `Ruchi... I promise that your happiness will never feel like a burden to me. I want to be part of it.` },
+      { title: "Promise #5", text: `I promise to protect your peace. Not by controlling your world... But by being the calm inside it.`, layout: "inner" },
 
-      { title: "Promise #7", text: `I promise I’ll stay. Not only when things are cute... But also when things are messy. Because love is not temporary.` },
+      { title: "Promise #6", text: `Ruchi... I promise that your happiness will never feel like a burden to me. I want to be part of it.`, layout: "inner" },
 
-      { title: "Promise #8", text: `I promise to hold your hand. In public. In private. In every storm. Ruchi, you won’t walk alone.` },
+      { title: "Promise #7", text: `I promise I’ll stay. Not only when things are cute... But also when things are messy. Because love is not temporary.`, layout: "inner" },
 
-      { title: "Promise #9", text: `I promise to love you softly. Not loudly. Not dramatically. But in a way that feels safe. And forever.` },
+      { title: "Promise #8", text: `I promise to hold your hand. In public. In private. In every storm. Ruchi, you won’t walk alone.`, layout: "inner" },
 
-      { title: "Promise #10", text: `Ruchi...My final promise is simple: I will never stop loving you. Not today. Not tomorrow. Not in any lifetime. — Yours, Yash ❤️` },
+      { title: "Promise #9", text: `I promise to love you softly. Not loudly. Not dramatically. But in a way that feels safe. And forever.`, layout: "inner" },
 
-      { title: "", text: "" },
-      { title: "", text: "" },
-      { title: "", text: "" },
+      { title: "Promise #10", text: `Ruchi...My final promise is simple: I will never stop loving you. Not today. Not tomorrow. Not in any lifetime. — Yours, Yash ❤️`, layout: "inner" },
 
-      { title: "", text: `More promises will be written soon… ✍️❤️` }
+      { title: "", text: "", layout: "blank" },
+      { title: "", text: "", layout: "blank" },
+      { title: "", text: "", layout: "blank" },
+
+      { title: "", text: `More promises will be written soon… ✍️❤️`, layout: "inner" }
     ];
 
-    function randomBetween(min, max) {
+    function rand(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    function generateDoodleSVG(top, left, size) {
+    function generateDoodleSVG(x, y, size = 70) {
       const doodles = [
         `<path d="M40 65 C20 50, 10 35, 20 25 C28 15, 40 20, 40 30 C40 20, 55 15, 60 25 C70 38, 55 52, 40 65 Z"/>`,
+        `<path d="M40 10 L48 32 L72 32 L52 46 L60 70 L40 55 L20 70 L28 46 L8 32 L32 32 Z"/>`,
+        `<path d="M20 55 C10 55, 10 40, 22 40 C25 28, 40 25, 45 35 C55 28, 68 35, 62 48 C72 48, 72 62, 58 62 L22 62 C16 62, 14 55, 20 55 Z"/>`,
+        `<path d="M22 45 C22 30, 45 25, 52 40 C58 55, 35 62, 30 48 C25 36, 48 32, 58 44"/>`,
         `<circle cx="40" cy="40" r="6"/>
          <path d="M40 12 C34 20, 34 28, 40 30 C46 28, 46 20, 40 12 Z"/>
          <path d="M68 40 C60 34, 52 34, 50 40 C52 46, 60 46, 68 40 Z"/>
          <path d="M40 68 C34 60, 34 52, 40 50 C46 52, 46 60, 40 68 Z"/>
-         <path d="M12 40 C20 34, 28 34, 30 40 C28 46, 20 46, 12 40 Z"/>`,
-        `<path d="M40 10 L48 32 L72 32 L52 46 L60 70 L40 55 L20 70 L28 46 L8 32 L32 32 Z"/>`,
-        `<path d="M20 55 C10 55, 10 40, 22 40 C25 28, 40 25, 45 35 C55 28, 68 35, 62 48 C72 48, 72 62, 58 62 L22 62 C16 62, 14 55, 20 55 Z"/>`,
-        `<path d="M22 45 C22 30, 45 25, 52 40 C58 55, 35 62, 30 48 C25 36, 48 32, 58 44"/>`,
-        `<path d="M20 60 C30 35, 50 35, 60 60" />
-         <path d="M30 55 C40 40, 45 40, 55 55" />`,
-        `<path d="M20 40 C30 20, 55 20, 60 40 C55 60, 30 60, 20 40 Z"/>
-         <path d="M30 45 C40 35, 50 35, 55 45"/>`
+         <path d="M12 40 C20 34, 28 34, 30 40 C28 46, 20 46, 12 40 Z"/>`
       ];
 
       const chosen = doodles[Math.floor(Math.random() * doodles.length)];
+      const rotation = rand(-12, 12);
 
       return `
-        <svg class="doodle-svg" style="top:${top}px; left:${left}px; width:${size}px; height:${size}px;" viewBox="0 0 80 80">
+        <svg class="doodle-svg" style="top:${y}px; left:${x}px; width:${size}px; height:${size}px; transform: rotate(${rotation}deg);" viewBox="0 0 80 80">
           ${chosen}
         </svg>
       `;
     }
 
-    function generateDoodleCluster() {
-      // these are SAFE zones (outside text writing area)
-      const zones = [
-        { minTop: 120, maxTop: 190, minLeft: 270, maxLeft: 350 }, // top right
-        { minTop: 410, maxTop: 480, minLeft: 60, maxLeft: 160 },  // bottom left
-        { minTop: 430, maxTop: 500, minLeft: 250, maxLeft: 350 }, // bottom right
-        { minTop: 210, maxTop: 330, minLeft: 20, maxLeft: 80 },   // left mid
-        { minTop: 210, maxTop: 330, minLeft: 320, maxLeft: 380 }, // right mid
-      ];
-
-      const doodleCount = randomBetween(3, 8);
+    function generateFillerDoodles() {
+      // These fill leftover page area like real diary scribbles
+      const count = rand(4, 9);
       let html = "";
 
-      for (let i = 0; i < doodleCount; i++) {
-        const zone = zones[Math.floor(Math.random() * zones.length)];
-        const top = randomBetween(zone.minTop, zone.maxTop);
-        const left = randomBetween(zone.minLeft, zone.maxLeft);
-        const size = randomBetween(55, 90);
-
-        html += generateDoodleSVG(top, left, size);
+      for (let i = 0; i < count; i++) {
+        const x = rand(20, 320);
+        const y = rand(140, 520);
+        const size = rand(45, 85);
+        html += generateDoodleSVG(x, y, size);
       }
+
+      // extra tiny pen dots
+      const dots = rand(6, 14);
+      for (let i = 0; i < dots; i++) {
+        html += `<div class="pen-dot" style="top:${rand(120, 560)}px; left:${rand(30, 360)}px;"></div>`;
+      }
+
+      // subtle ink smudge
+      html += `<div class="ink-smudge" style="top:${rand(260, 460)}px; left:${rand(90, 220)}px;"></div>`;
 
       return html;
     }
 
     function buildPageHTML(pageObj, index) {
 
+      // cover
       if (pageObj.layout === "cover") {
         return `
           <div class="cover-inner">
@@ -482,37 +508,37 @@
         `;
       }
 
-      if (!pageObj || (!pageObj.title && !pageObj.text)) {
+      // blank pages
+      if (pageObj.layout === "blank") {
         return `
+          <div class="ruled-lines"></div>
           <div class="page-inner">
             <div class="watermark">Ruchi 💌</div>
-            ${generateDoodleCluster()}
-            <div class="page-number">${index + 1}</div>
+            ${generateFillerDoodles()}
+            <div class="page-number">${index}</div>
           </div>
         `;
       }
 
-      const padLeft = randomBetween(0, 12);
-      const padTop = randomBetween(0, 10);
-
-      const smudgeHTML = `
-        <div class="ink-smudge" style="top:${randomBetween(260, 410)}px; left:${randomBetween(90, 240)}px;"></div>
-      `;
+      // realistic random handwriting shift + rotation
+      const shiftX = rand(-6, 12);
+      const shiftY = rand(-4, 14);
+      const tilt = (Math.random() * 1.2 - 0.6).toFixed(2);
 
       return `
+        <div class="ruled-lines"></div>
+
         <div class="page-inner">
           <div class="watermark">Ruchi 💌</div>
 
-          ${smudgeHTML}
-
-          <div style="padding-left:${padLeft}px; padding-top:${padTop}px;">
+          <div style="transform: translate(${shiftX}px, ${shiftY}px) rotate(${tilt}deg); transform-origin: top left;">
             <div class="page-title">${pageObj.title}</div>
             <div class="page-text">${pageObj.text}</div>
           </div>
 
-          ${generateDoodleCluster()}
+          ${generateFillerDoodles()}
 
-          <div class="page-number">${index + 1}</div>
+          <div class="page-number">${index}</div>
         </div>
       `;
     }
@@ -528,12 +554,11 @@
 
         if (p.layout === "cover") {
           pageDiv.className = "page cover-page";
-          pageDiv.innerHTML = buildPageHTML(p, index);
         } else {
           pageDiv.className = "page inner-page";
-          pageDiv.innerHTML = buildPageHTML(p, index);
         }
 
+        pageDiv.innerHTML = buildPageHTML(p, index);
         container.appendChild(pageDiv);
       });
 
@@ -545,11 +570,11 @@
         maxWidth: 520,
         minHeight: 500,
         maxHeight: 650,
-        maxShadowOpacity: 0.45,
+        maxShadowOpacity: 0.55,
         showCover: true,
         mobileScrollSupport: false,
         useMouseEvents: true,
-        flippingTime: 850
+        flippingTime: 900
       });
 
       pageFlip.loadFromHTML(document.querySelectorAll("#bookContainer .page"));
@@ -573,7 +598,6 @@
       document.getElementById("bookWrapper").style.display = "block";
 
       renderBook();
-
       music.play().catch(() => {});
     }
   </script>
