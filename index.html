@@ -545,7 +545,12 @@
     return html;
   }
 
-  function buildPageHTML(pageObj, index) {
+  function buildPageHTML(pageObj, index) { 
+    const lastInnerIndex = pages.map((p,i)=>({p,i}))
+  .filter(x => x.p.layout === "inner" && x.p.text.trim() !== "")
+  .pop().i;
+
+const isLastTextPage = index === lastInnerIndex;
 
     if (pageObj.layout === "cover") {
       return `
@@ -584,7 +589,7 @@
       <div class="ruled-lines"></div>
       <div class="top-margin-strip"></div>
 
-      <div class="page-inner">
+     <div class="page-inner" style="${isLastTextPage ? 'padding-bottom:40px;' : ''}">
         <div class="watermark">Ruchi💕</div>
 
         <div style="transform: translate(${shiftX}px, ${shiftY}px) rotate(${tilt}deg); transform-origin: top left;">
