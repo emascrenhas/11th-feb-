@@ -15,7 +15,7 @@
     body {
       margin: 0;
       padding: 0;
-      background: #2b1d14;
+      background: radial-gradient(circle at top, #3a2619, #120b06);
       font-family: "Inter", sans-serif;
       overflow: hidden;
       display: flex;
@@ -40,12 +40,12 @@
     }
 
     .cover-book {
-      width: 320px;
-      height: 440px;
-      background: linear-gradient(145deg, #5a2f1a, #2d140a);
+      width: 330px;
+      height: 460px;
+      background: linear-gradient(145deg, #6a341c, #2a1309);
       border-radius: 18px;
-      box-shadow: 0px 25px 60px rgba(0,0,0,0.7);
-      border: 2px solid rgba(255,255,255,0.15);
+      box-shadow: 0px 30px 70px rgba(0,0,0,0.75);
+      border: 2px solid rgba(255,255,255,0.12);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -59,20 +59,31 @@
       position: absolute;
       inset: 0;
       background: url("https://www.transparenttextures.com/patterns/leather.png");
-      opacity: 0.25;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .cover-book::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.18), transparent 60%);
+      opacity: 0.5;
+      pointer-events: none;
     }
 
     .cover-title {
       font-family: "Homemade Apple", cursive;
-      font-size: 1.9rem;
-      color: #f4d7a4;
+      font-size: 2rem;
+      color: #f6d7a8;
       z-index: 2;
       margin-bottom: 10px;
+      text-shadow: 0px 3px 12px rgba(0,0,0,0.6);
     }
 
     .cover-sub {
       font-size: 1rem;
-      color: rgba(244, 215, 164, 0.85);
+      color: rgba(246, 215, 168, 0.85);
       z-index: 2;
       margin-top: 5px;
     }
@@ -82,7 +93,7 @@
       padding: 14px 28px;
       border: none;
       border-radius: 40px;
-      background: #f4d7a4;
+      background: #f6d7a8;
       color: #1b100a;
       font-weight: 600;
       cursor: pointer;
@@ -93,14 +104,14 @@
 
     .open-btn:hover {
       transform: scale(1.06);
-      background: #ffdcae;
+      background: #ffe2bd;
     }
 
     /* ---------- BOOK WRAPPER ---------- */
     .book-wrapper {
       width: 95%;
-      max-width: 500px;
-      height: 560px;
+      max-width: 520px;
+      height: 590px;
       display: none;
       position: relative;
     }
@@ -111,201 +122,207 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
     }
 
-/* ---------- PAGE BASE ---------- */
-.page {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow:
-    0px 12px 28px rgba(0,0,0,0.35),
-    inset 0px 0px 20px rgba(0,0,0,0.08);
-}
+    /* ---------- PAGE BASE ---------- */
+    .page {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow:
+        0px 14px 30px rgba(0,0,0,0.4),
+        inset 0px 0px 22px rgba(0,0,0,0.08);
+    }
 
-/* ---------- COVER PAGE (leather, NOT ruled) ---------- */
-.page.cover-page {
-  background: linear-gradient(145deg, #5a2f1a, #2d140a);
-  border: 2px solid rgba(255,255,255,0.12);
-}
+    /* ---------- COVER PAGE ---------- */
+    .page.cover-page {
+      background: linear-gradient(145deg, #6a341c, #2a1309);
+      border: 2px solid rgba(255,255,255,0.12);
+    }
 
-.page.cover-page::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("https://www.transparenttextures.com/patterns/leather.png");
-  opacity: 0.28;
-  pointer-events: none;
-}
+    .page.cover-page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("https://www.transparenttextures.com/patterns/leather.png");
+      opacity: 0.35;
+      pointer-events: none;
+    }
 
-.page.cover-page::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top, rgba(255,255,255,0.12), transparent 60%);
-  opacity: 0.4;
-  pointer-events: none;
-}
+    .page.cover-page::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.15), transparent 60%);
+      opacity: 0.45;
+      pointer-events: none;
+    }
 
-/* ---------- INSIDE PAGES (ruled diary) ---------- */
-.page.inner-page {
-  background: #fbf6e9;
-  border: 1px solid rgba(0,0,0,0.14);
-}
+    /* ---------- INNER PAGES ---------- */
+    .page.inner-page {
+      background: #fff9ef;
+      border: 1px solid rgba(0,0,0,0.12);
+    }
 
-/* paper fiber texture */
-.page.inner-page::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-  opacity: 0.38;
-  pointer-events: none;
-}
+    /* paper fibers */
+    .page.inner-page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+      opacity: 0.35;
+      pointer-events: none;
+    }
 
-/* ruled teal lines + red margin line */
-.page.inner-page::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    repeating-linear-gradient(
-      to bottom,
-      rgba(0, 120, 160, 0.22) 0px,
-      rgba(0, 120, 160, 0.22) 1px,
-      transparent 1px,
-      transparent 32px
-    ),
-    linear-gradient(
-      to right,
-      rgba(220, 60, 60, 0.28) 2px,
-      transparent 2px
-    );
-  background-size: 100% 32px, 2px 100%;
-  background-position: 0px 75px, 55px 0px;
-  pointer-events: none;
-  opacity: 1;
-}
+    /* ruled lines + margin */
+    .page.inner-page::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(0, 120, 160, 0.17) 0px,
+          rgba(0, 120, 160, 0.17) 1px,
+          transparent 1px,
+          transparent 32px
+        ),
+        linear-gradient(
+          to right,
+          rgba(220, 60, 60, 0.25) 2px,
+          transparent 2px
+        );
+      background-size: 100% 32px, 2px 100%;
+      background-position: 0px 75px, 55px 0px;
+      pointer-events: none;
+      opacity: 1;
+    }
 
-/* ---------- PAGE INNER ---------- */
-.page-inner {
-  height: 100%;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 5;
-  padding: 72px 28px 55px;
-}
+    /* paper edge shading */
+    .paper-edge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 22px;
+      height: 100%;
+      background: linear-gradient(to left, rgba(0,0,0,0.12), transparent);
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 3;
+    }
 
-/* cover page inner */
-.cover-inner {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 40px 25px;
-  color: #f4d7a4;
-}
+    /* ---------- PAGE INNER ---------- */
+    .page-inner {
+      height: 100%;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 5;
+      padding: 72px 28px 55px;
+    }
 
-.cover-inner h1 {
-  font-family: "Homemade Apple", cursive;
-  font-size: 2rem;
-  margin: 0;
-}
+    /* cover inner */
+    .cover-inner {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 25px;
+      color: #f6d7a8;
+      position: relative;
+      z-index: 6;
+    }
 
-.cover-inner p {
-  font-size: 1rem;
-  margin-top: 15px;
-  opacity: 0.85;
-}
+    .cover-inner h1 {
+      font-family: "Homemade Apple", cursive;
+      font-size: 2.1rem;
+      margin: 0;
+      text-shadow: 0px 4px 14px rgba(0,0,0,0.6);
+    }
 
-/* ---------- HANDWRITTEN TEXT ---------- */
-.page-title {
-  font-family: "Homemade Apple", cursive;
-  font-size: 1.35rem;
-  margin-bottom: 16px;
-  color: rgba(25, 15, 10, 0.92);
-}
+    .cover-inner p {
+      font-size: 1rem;
+      margin-top: 15px;
+      opacity: 0.85;
+    }
 
-.page-text {
-  font-family: "Homemade Apple", cursive;
-  font-size: 1.08rem;
-  line-height: 2.05;
-  color: rgba(20, 12, 10, 0.92);
-  white-space: pre-line;
+    /* ---------- HANDWRITTEN TEXT ---------- */
+    .page-title {
+      font-family: "Homemade Apple", cursive;
+      font-size: 1.35rem;
+      margin-bottom: 16px;
+      color: rgba(20, 12, 10, 0.92);
+    }
 
-  /* pen ink effect */
-  text-shadow:
-    0px 0px 0.8px rgba(0,0,0,0.25),
-    0px 0px 1.4px rgba(0,0,0,0.12);
-}
+    .page-text {
+      font-family: "Homemade Apple", cursive;
+      font-size: 1.07rem;
+      line-height: 2.05;
+      color: rgba(20, 12, 10, 0.92);
+      white-space: pre-line;
 
-/* watermark */
-.watermark {
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  font-family: "Homemade Apple", cursive;
-  font-size: 0.9rem;
-  opacity: 0.22;
-  color: rgba(0, 60, 120, 0.55);
-  pointer-events: none;
-  z-index: 6;
-}
+      text-shadow:
+        0px 0px 0.8px rgba(0,0,0,0.25),
+        0px 0px 1.5px rgba(0,0,0,0.12);
+    }
 
-/* page number */
-.page-number {
-  position: absolute;
-  bottom: 14px;
-  right: 18px;
-  font-family: "Inter", sans-serif;
-  font-size: 0.8rem;
-  opacity: 0.55;
-  color: rgba(0, 0, 0, 0.7);
-  pointer-events: none;
-  z-index: 6;
-}
+    /* watermark */
+    .watermark {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-family: "Homemade Apple", cursive;
+      font-size: 0.9rem;
+      opacity: 0.22;
+      color: rgba(0, 60, 120, 0.55);
+      pointer-events: none;
+      z-index: 6;
+    }
 
-/* ---------- DOODLES (BLUE INK SVG) ---------- */
-.doodle-svg {
-  position: absolute;
-  width: 78px;
-  height: 78px;
-  opacity: 0.55;
-  pointer-events: none;
-  z-index: 4;
-  stroke: rgba(0, 70, 150, 0.85);
-  fill: none;
-  stroke-width: 2.2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  filter: drop-shadow(0px 0px 0.8px rgba(0,0,0,0.1));
-}
+    /* page number */
+    .page-number {
+      position: absolute;
+      bottom: 14px;
+      right: 18px;
+      font-family: "Inter", sans-serif;
+      font-size: 0.8rem;
+      opacity: 0.6;
+      color: rgba(0, 0, 0, 0.75);
+      pointer-events: none;
+      z-index: 6;
+    }
 
-/* ink smudge */
-.ink-smudge {
-  position: absolute;
-  width: 140px;
-  height: 110px;
-  background: radial-gradient(circle, rgba(0,70,150,0.18), transparent 70%);
-  opacity: 0.12;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 2;
-  transform: rotate(-12deg);
-}
+    /* doodles */
+    .doodle-svg {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: 4;
+      stroke: rgba(0, 70, 150, 0.85);
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0px 0px 1px rgba(0,0,0,0.12));
+    }
 
-/* mobile */
-@media(max-width: 600px) {
-  .page-inner {
-    padding: 70px 18px 50px;
-  }
+    /* ink smudge */
+    .ink-smudge {
+      position: absolute;
+      width: 140px;
+      height: 110px;
+      background: radial-gradient(circle, rgba(0,70,150,0.18), transparent 70%);
+      opacity: 0.11;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 2;
+      transform: rotate(-12deg);
+    }
 
-  .page-text {
-    font-size: 0.98rem;
-  }
-                      }
     /* ---------- CONTROLS ---------- */
     .controls {
       position: absolute;
@@ -315,15 +332,15 @@
       justify-content: space-between;
       align-items: center;
       padding: 0 10px;
-      color: rgba(255,255,255,0.8);
+      color: rgba(255,255,255,0.85);
       font-size: 0.9rem;
       user-select: none;
     }
 
     .nav-btn {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.25);
-      color: rgba(255,255,255,0.85);
+      color: rgba(255,255,255,0.9);
       padding: 10px 18px;
       border-radius: 30px;
       cursor: pointer;
@@ -332,7 +349,7 @@
     }
 
     .nav-btn:hover {
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.22);
     }
 
     .hint {
@@ -340,11 +357,24 @@
       top: -38px;
       width: 100%;
       text-align: center;
-      color: rgba(255,255,255,0.8);
+      color: rgba(255,255,255,0.85);
       font-size: 0.9rem;
     }
 
-  
+    /* ---------- MOBILE ---------- */
+    @media(max-width: 600px) {
+      .page-inner {
+        padding: 70px 18px 50px;
+      }
+
+      .page-text {
+        font-size: 0.98rem;
+      }
+
+      .book-wrapper {
+        height: 560px;
+      }
+    }
   </style>
 </head>
 
@@ -368,9 +398,7 @@
 
   <!-- Book -->
   <div class="book-wrapper" id="bookWrapper">
-
     <div class="hint">Swipe left/right to turn pages ✨</div>
-
     <div id="bookContainer"></div>
 
     <div class="controls">
@@ -378,18 +406,13 @@
       <div id="pageIndicator">Page 1</div>
       <button class="nav-btn" onclick="goNext()">Next ➡</button>
     </div>
-
   </div>
 
   <script>
     const music = document.getElementById("bgMusic");
 
-    // DOODLES (auto generated, no images needed)
-    const doodles = ["❤️", "✨", "🌸", "💍", "🧸", "🌙", "⭐", "🍫", "💌", "🎀", "🌹", "🫶"];
-
     const pages = [
-      { title: "", text: "", layout: "cover" },
-      { title: "Promise Diary", text: `For Ruchi ❤️\n\n— Yours, Yash`, type: "cover" },
+      { layout: "cover" },
 
       { title: "Promise #1", text: `Ruchi... I promise I’ll always choose you. Even in chaos. Even in silence. Even in the hardest days. Always you.` },
 
@@ -422,135 +445,110 @@
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    function buildPageHTML(pageObj, index) {
+    function generateDoodleSVG(top, left) {
+      const doodles = [
+        `<path d="M40 65 C20 50, 10 35, 20 25 C28 15, 40 20, 40 30 C40 20, 55 15, 60 25 C70 38, 55 52, 40 65 Z"/>`,
 
-  // cover page
-  if (pageObj.layout === "cover") {
-    return `
-      <div class="cover-inner">
-        <h1>Promise Diary</h1>
-        <p>For Ruchi ❤️</p>
-        <p style="margin-top:18px;">— By Yash ✍️</p>
-      </div>
-    `;
-  }
+        `<circle cx="40" cy="40" r="6"/>
+         <path d="M40 12 C34 20, 34 28, 40 30 C46 28, 46 20, 40 12 Z"/>
+         <path d="M68 40 C60 34, 52 34, 50 40 C52 46, 60 46, 68 40 Z"/>
+         <path d="M40 68 C34 60, 34 52, 40 50 C46 52, 46 60, 40 68 Z"/>
+         <path d="M12 40 C20 34, 28 34, 30 40 C28 46, 20 46, 12 40 Z"/>`,
 
-  // blank page
-  if (!pageObj || pageObj.layout === "blank") {
-    return `
-      <div class="page-inner">
-        <div class="watermark">Ruchi 💌</div>
-        <div class="page-number">${index + 1}</div>
-      </div>
-    `;
-  }
+        `<path d="M40 10 L48 32 L72 32 L52 46 L60 70 L40 55 L20 70 L28 46 L8 32 L32 32 Z"/>`,
 
-  // random safe text block shift (looks natural)
-  const padLeft = randomBetween(5, 22);
-  const padTop = randomBetween(0, 18);
+        `<path d="M20 55 C10 55, 10 40, 22 40 C25 28, 40 25, 45 35 C55 28, 68 35, 62 48 C72 48, 72 62, 58 62 L22 62 C16 62, 14 55, 20 55 Z"/>`,
 
-  // doodles must NOT overlap text:
-  // So we place doodles near top-right / bottom-left safe zones only.
-  const doodlePositions = [
-    { top: 95, left: 255 },
-    { top: 135, left: 40 },
-    { top: 360, left: 260 },
-    { top: 410, left: 55 }
-  ];
+        `<path d="M22 45 C22 30, 45 25, 52 40 C58 55, 35 62, 30 48 C25 36, 48 32, 58 44"/>`
+      ];
 
-  const chosen = doodlePositions[Math.floor(Math.random() * doodlePositions.length)];
+      const chosen = doodles[Math.floor(Math.random() * doodles.length)];
 
-  const doodleHTML = generateDoodleSVG(chosen.top, chosen.left);
-
-  // ink smudge subtle
-  const smudgeHTML = `
-    <div class="ink-smudge" style="top:${randomBetween(220, 380)}px; left:${randomBetween(30, 180)}px;"></div>
-  `;
-
-  return `
-    <div class="page-inner">
-      <div class="watermark">Ruchi 💌</div>
-      ${smudgeHTML}
-
-      <div style="padding-left:${padLeft}px; padding-top:${padTop}px;">
-        <div class="page-title">${pageObj.title}</div>
-        <div class="page-text">${pageObj.text}</div>
-      </div>
-
-      ${doodleHTML}
-      <div class="page-number">${index + 1}</div>
-    </div>
-  `;
+      return `
+        <svg class="doodle-svg" style="top:${top}px; left:${left}px;" viewBox="0 0 80 80">
+          ${chosen}
+        </svg>
+      `;
     }
 
-    function randomBetween(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+    function buildPageHTML(pageObj, index) {
 
-function generateDoodleSVG(top, left) {
-  const doodles = [
-    // heart doodle
-    `<path d="M40 65 C20 50, 10 35, 20 25 C28 15, 40 20, 40 30 C40 20, 55 15, 60 25 C70 38, 55 52, 40 65 Z"/>`,
+      if (pageObj.layout === "cover") {
+        return `
+          <div class="cover-inner">
+            <h1>Promise Diary</h1>
+            <p>For Ruchi ❤️</p>
+            <p style="margin-top:18px;">— By Yash ✍️</p>
+          </div>
+        `;
+      }
 
-    // flower doodle
-    `<circle cx="40" cy="40" r="6"/>
-     <path d="M40 12 C34 20, 34 28, 40 30 C46 28, 46 20, 40 12 Z"/>
-     <path d="M68 40 C60 34, 52 34, 50 40 C52 46, 60 46, 68 40 Z"/>
-     <path d="M40 68 C34 60, 34 52, 40 50 C46 52, 46 60, 40 68 Z"/>
-     <path d="M12 40 C20 34, 28 34, 30 40 C28 46, 20 46, 12 40 Z"/>`,
+      const padLeft = randomBetween(4, 20);
+      const padTop = randomBetween(0, 16);
 
-    // star doodle
-    `<path d="M40 10 L48 32 L72 32 L52 46 L60 70 L40 55 L20 70 L28 46 L8 32 L32 32 Z"/>`,
+      const doodlePositions = [
+        { top: 110, left: 240 },
+        { top: 150, left: 35 },
+        { top: 365, left: 245 },
+        { top: 415, left: 55 }
+      ];
 
-    // cloud doodle
-    `<path d="M20 55 C10 55, 10 40, 22 40 C25 28, 40 25, 45 35 C55 28, 68 35, 62 48 C72 48, 72 62, 58 62 L22 62 C16 62, 14 55, 20 55 Z"/>`,
+      const chosen = doodlePositions[Math.floor(Math.random() * doodlePositions.length)];
+      const doodleHTML = generateDoodleSVG(chosen.top, chosen.left);
 
-    // cute swirl
-    `<path d="M22 45 C22 30, 45 25, 52 40 C58 55, 35 62, 30 48 C25 36, 48 32, 58 44"/>`
-  ];
+      const smudgeHTML = `
+        <div class="ink-smudge" style="top:${randomBetween(220, 390)}px; left:${randomBetween(25, 180)}px;"></div>
+      `;
 
-  const chosen = doodles[Math.floor(Math.random() * doodles.length)];
+      return `
+        <div class="page-inner">
+          <div class="watermark">Ruchi 💌</div>
+          ${smudgeHTML}
 
-  return `
-    <svg class="doodle-svg" style="top:${top}px; left:${left}px;" viewBox="0 0 80 80">
-      ${chosen}
-    </svg>
-  `;
-}
-    
+          <div style="padding-left:${padLeft}px; padding-top:${padTop}px;">
+            <div class="page-title">${pageObj.title}</div>
+            <div class="page-text">${pageObj.text}</div>
+          </div>
+
+          ${doodleHTML}
+          <div class="page-number">${index}</div>
+          <div class="paper-edge"></div>
+        </div>
+      `;
+    }
+
     let pageFlip;
 
     function renderBook() {
       const container = document.getElementById("bookContainer");
       container.innerHTML = "";
 
-     pages.forEach((p, index) => {
-  const pageDiv = document.createElement("div");
+      pages.forEach((p, index) => {
+        const pageDiv = document.createElement("div");
 
-  if (p.layout === "cover") {
-    pageDiv.className = "page cover-page";
-    pageDiv.innerHTML = buildPageHTML(p, index);
-  } else {
-    pageDiv.className = "page inner-page";
-    pageDiv.innerHTML = buildPageHTML(p, index);
-  }
+        if (p.layout === "cover") {
+          pageDiv.className = "page cover-page";
+        } else {
+          pageDiv.className = "page inner-page";
+        }
 
-  container.appendChild(pageDiv);
-});
+        pageDiv.innerHTML = buildPageHTML(p, index);
+        container.appendChild(pageDiv);
+      });
 
       pageFlip = new St.PageFlip(container, {
         width: 360,
         height: 520,
         size: "stretch",
         minWidth: 320,
-        maxWidth: 500,
-        minHeight: 450,
-        maxHeight: 600,
-        maxShadowOpacity: 0.45,
+        maxWidth: 520,
+        minHeight: 460,
+        maxHeight: 620,
+        maxShadowOpacity: 0.5,
         showCover: true,
         mobileScrollSupport: false,
         useMouseEvents: true,
-        flippingTime: 850
+        flippingTime: 900
       });
 
       pageFlip.loadFromHTML(document.querySelectorAll("#bookContainer .page"));
@@ -574,7 +572,6 @@ function generateDoodleSVG(top, left) {
       document.getElementById("bookWrapper").style.display = "block";
 
       renderBook();
-
       music.play().catch(() => {});
     }
   </script>
