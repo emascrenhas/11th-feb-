@@ -401,6 +401,10 @@
     background: rgba(255,255,255,0.2);
   }
 
+.page-inner.last-page {
+  padding: 105px 30px 60px 85px !important;
+}
+  
   .hint {
     position: absolute;
     top: -38px;
@@ -471,7 +475,7 @@
 
     { title: "🎀❤️🤞", text: `I promise to love you softly. Not loudly. Not dramatically. But in a way that feels safe. And forever🌼🫀.`, layout: "inner" },
 
-    { title: "🎀❤️🤞", text: `Ruchi... I promise I will never stop loving you. Not today. Not tomorrow. Not in any lifetime. and My love for you will just grow more and more and more and jaise tum bolti ho na ki tumhare pyar me ekdum gir jau waise hi blkl i will fall in love with you kore and more again and again every day..💖🌹`, layout: "inner" },
+    { title: "🎀❤️🤞", text: `Ruchi... I promise I will never stop loving you. Not today. Not tomorrow. Not in any lifetime. and My love for you will just grow more and more and more and jaise tum bolti ho na ki tumhare pyar me ekdum gir jau waise hi blkl i will fall in love with you kore and more again and again every day..💖🌹`, layout: "lastPromise" },
 
     { title: "", text: `More promises will be written soon… ✍️❤️`, layout: "blank" },
     { title: "", text: "", layout: "blank" },
@@ -554,15 +558,22 @@
     }
 
     if (pageObj.layout === "blank") {
-      return `
-        <div class="ruled-lines"></div>
-        <div class="top-margin-strip"></div>
-        <div class="page-inner">
-          <div class="watermark">Ruchi💕</div>
-          ${generateFillerDoodles()}
-          <div class="page-number">${index}</div>
+  return `
+    <div class="ruled-lines"></div>
+    <div class="top-margin-strip"></div>
+    <div class="page-inner">
+      <div class="watermark">Ruchi💕</div>
+
+      <div style="margin-top:40px; transform: rotate(-0.4deg);">
+        <div class="page-text" style="font-size:1.05rem; opacity:0.85;">
+          ${pageObj.text}
         </div>
-      `;
+      </div>
+
+      ${generateFillerDoodles()}
+      <div class="page-number">${index}</div>
+    </div>
+  `;
     }
 
     const shiftX = rand(-8, 10);
