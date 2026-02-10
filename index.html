@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Promise Diary for Ruchi 📖❤️</title>
+  <title>📖❤️</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -422,9 +422,9 @@
   <!-- Cover Screen -->
   <div class="cover-screen" id="coverScreen">
     <div class="cover-book">
-      <div class="cover-title">Promise Diary</div>
-      <div class="cover-sub">For Ruchi ❤️</div>
-      <div class="cover-sub" style="margin-top:12px;">— By Yash</div>
+      <div class="cover-title">A Virtual Diary..</div>
+      <div class="cover-sub">With lots of Love<br>Only For Ruchi ❤️</div>
+      <div class="cover-sub" style="margin-top:12px;">— By One and only yours Yash🫂</div>
     </div>
 
     <button class="open-btn" onclick="openDiary()">Open the Diary 📖</button>
@@ -433,7 +433,7 @@
   <!-- Book -->
   <div class="book-wrapper" id="bookWrapper">
 
-    <div class="hint">Swipe left/right to turn pages ✨</div>
+    <div class="hint">Swipe left/right or tap buttons to turn pages ✨</div>
 
     <div id="bookContainer"></div>
 
@@ -450,34 +450,34 @@
 
   const pages = [
     { layout: "cover" },
+    
+    { title: "Yess its a Promise Diary", text: `For Ruchi ❤️\n\n Happy Promise day\nmy sweet sweetheart my darling🥀🫂`, layout: "inner" },
 
-    { title: "Promise Diary", text: `For Ruchi ❤️\n\n— Yours, Yash`, layout: "inner" },
+    { title: "🎀❤️🤞", text: `Ruchi... I promise I’ll always choose you. In all the good days, in chaos, in silence, and in the hardest days. Always you🥹❤️.`, layout: "inner" },
 
-    { title: "Promise #1", text: `Ruchi... I promise I’ll always choose you. Even in chaos. Even in silence. Even in the hardest days. Always you.`, layout: "inner" },
+    { title: "🎀❤️🤞", text: `I promise to always listen. Not just to your words... But to your moods. Your eyes. Your silence. Because you deserve to be understood and you are the bestest💞🌷.`, layout: "inner" },
 
-    { title: "Promise #2", text: `I promise to always listen. Not just to your words... But to your moods. Your eyes. Your silence. Because you deserve to be understood.`, layout: "inner" },
+    { title: "🎀❤️🤞", text: `Ruchi, I promise to make you laugh. Even when life feels heavy. And yes... I’ll annoy you a little too 😌💓`, layout: "inner" },
 
-    { title: "Promise #3", text: `Ruchi, I promise to make you laugh. Even when life feels heavy. And yes... I’ll annoy you a little too 😌❤️`, layout: "inner" },
+    { title: "🎀❤️🤞", text: `I promise to be proud of you. In every phase. In every version. Even when you doubt yourself... I won’t. And i will always be by your side🫂🫶`, layout: "inner" },
 
-    { title: "Promise #4", text: `I promise to be proud of you. In every phase. In every version. Even when you doubt yourself... I won’t.`, layout: "inner" },
+    { title: "🎀❤️🤞", text: `I promise to protect your peace. Not by controlling your world... But by being the calm inside it. Yess my baby i want to be a part of your world and i want you to be a part of my world so i want a small world with us being together forever🌸💕.`, layout: "inner" },
 
-    { title: "Promise #5", text: `I promise to protect your peace. Not by controlling your world... But by being the calm inside it.`, layout: "inner" },
+    { title: "🎀❤️🤞", text: `Ruchi... I promise that your happiness will never feel like a burden to me. I want to be part of it. I want you to be happy always cause \n You Happy=Me Happy🥹💓`, layout: "inner" },
 
-    { title: "Promise #6", text: `Ruchi... I promise that your happiness will never feel like a burden to me. I want to be part of it.`, layout: "inner" },
+    { title: "🎀❤️🤞", text: `I promise I’ll stay. Not only when things are cute... But also when things are messy. Because love is not temporary. And just like it me and my love both are permanent for you🤞🌹.`, layout: "inner" },
 
-    { title: "Promise #7", text: `I promise I’ll stay. Not only when things are cute... But also when things are messy. Because love is not temporary.`, layout: "inner" },
+    { title: "🎀❤️🤞", text: `I promise to hold your hand. In public. In private. In every storm. Ruchi, you won’t walk alone. You will always find me by your side🩷💮`, layout: "inner" },
 
-    { title: "Promise #8", text: `I promise to hold your hand. In public. In private. In every storm. Ruchi, you won’t walk alone.`, layout: "inner" },
+    { title: "🎀❤️🤞", text: `I promise to love you softly. Not loudly. Not dramatically. But in a way that feels safe. And forever🌼🫀.`, layout: "inner" },
 
-    { title: "Promise #9", text: `I promise to love you softly. Not loudly. Not dramatically. But in a way that feels safe. And forever.`, layout: "inner" },
+    { title: "🎀❤️🤞", text: `Ruchi... I promise I will never stop loving you. Not today. Not tomorrow. Not in any lifetime. and My love for you will just grow more and more and more and jaise tum bolti ho na ki tumhare pyar me ekdum gir jau waise hi blkl i will fall in love with you kore and more again and again every day..💖🌹`, layout: "inner" },
 
-    { title: "Promise #10", text: `Ruchi...My final promise is simple: I will never stop loving you. Not today. Not tomorrow. Not in any lifetime. — Yours, Yash ❤️`, layout: "inner" },
-
+    { title: "", text: `More promises will be written soon… ✍️❤️`, layout: "blank" },
     { title: "", text: "", layout: "blank" },
     { title: "", text: "", layout: "blank" },
-    { title: "", text: "", layout: "blank" },
 
-    { title: "", text: `More promises will be written soon… ✍️❤️`, layout: "inner" }
+    { title: "", text: "", layout: "inner" }
   ];
 
   function rand(min, max) {
@@ -548,7 +548,7 @@
         <div class="cover-inner">
           <h1>Promise Diary</h1>
           <p>For Ruchi ❤️</p>
-          <p style="margin-top:18px;">— By Yash ✍️</p>
+          <p style="margin-top:18px;"></p>
         </div>
       `;
     }
@@ -558,7 +558,7 @@
         <div class="ruled-lines"></div>
         <div class="top-margin-strip"></div>
         <div class="page-inner">
-          <div class="watermark">Ruchi 💌</div>
+          <div class="watermark">Ruchi💕</div>
           ${generateFillerDoodles()}
           <div class="page-number">${index}</div>
         </div>
@@ -574,7 +574,7 @@
       <div class="top-margin-strip"></div>
 
       <div class="page-inner">
-        <div class="watermark">Ruchi 💌</div>
+        <div class="watermark">Ruchi💕</div>
 
         <div style="transform: translate(${shiftX}px, ${shiftY}px) rotate(${tilt}deg); transform-origin: top left;">
           <div class="page-title">${pageObj.title}</div>
