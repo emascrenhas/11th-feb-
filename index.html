@@ -11,369 +11,405 @@
   <!-- PageFlip Library -->
   <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(circle at top, #3a2619, #1b100a);
-      font-family: "Inter", sans-serif;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at top, #3a2619, #1b100a);
+    font-family: "Inter", sans-serif;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 
-    /* ---------- COVER SCREEN ---------- */
-    .cover-screen {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: radial-gradient(circle at top, #3a2619, #1b100a);
-      z-index: 20;
-      flex-direction: column;
-      padding: 20px;
-      text-align: center;
-    }
+  /* ---------- COVER SCREEN ---------- */
+  .cover-screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at top, #3a2619, #1b100a);
+    z-index: 20;
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+  }
 
-    .cover-book {
-      width: 320px;
-      height: 440px;
-      background: linear-gradient(145deg, #5a2f1a, #2d140a);
-      border-radius: 18px;
-      box-shadow: 0px 25px 60px rgba(0,0,0,0.7);
-      border: 2px solid rgba(255,255,255,0.15);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-    }
+  .cover-book {
+    width: 320px;
+    height: 440px;
+    background: linear-gradient(145deg, #5a2f1a, #2d140a);
+    border-radius: 18px;
+    box-shadow: 0px 25px 60px rgba(0,0,0,0.7);
+    border: 2px solid rgba(255,255,255,0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
 
-    .cover-book::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: url("https://www.transparenttextures.com/patterns/leather.png");
-      opacity: 0.25;
-    }
+  .cover-book::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("https://www.transparenttextures.com/patterns/leather.png");
+    opacity: 0.28;
+  }
 
-    .cover-title {
-      font-family: "Homemade Apple", cursive;
-      font-size: 2rem;
-      color: #f4d7a4;
-      z-index: 2;
-      margin-bottom: 10px;
-    }
+  .cover-book::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top, rgba(255,255,255,0.15), transparent 70%);
+    opacity: 0.55;
+  }
 
-    .cover-sub {
-      font-size: 1rem;
-      color: rgba(244, 215, 164, 0.85);
-      z-index: 2;
-      margin-top: 5px;
-    }
+  .cover-title {
+    font-family: "Homemade Apple", cursive;
+    font-size: 2rem;
+    color: #f4d7a4;
+    z-index: 2;
+    margin-bottom: 10px;
+  }
 
-    .open-btn {
-      margin-top: 25px;
-      padding: 14px 28px;
-      border: none;
-      border-radius: 40px;
-      background: #f4d7a4;
-      color: #1b100a;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: 0.3s;
-      box-shadow: 0px 12px 25px rgba(0,0,0,0.6);
-    }
+  .cover-sub {
+    font-size: 1rem;
+    color: rgba(244, 215, 164, 0.85);
+    z-index: 2;
+    margin-top: 5px;
+  }
 
-    .open-btn:hover {
-      transform: scale(1.06);
-      background: #ffdcae;
-    }
+  .open-btn {
+    margin-top: 25px;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 40px;
+    background: #f4d7a4;
+    color: #1b100a;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+    box-shadow: 0px 12px 25px rgba(0,0,0,0.6);
+  }
 
-    /* ---------- BOOK WRAPPER ---------- */
+  .open-btn:hover {
+    transform: scale(1.06);
+    background: #ffdcae;
+  }
+
+  /* ---------- BOOK WRAPPER ---------- */
+  .book-wrapper {
+    width: 95%;
+    max-width: 520px;
+    height: 600px;
+    display: none;
+    position: relative;
+  }
+
+  #bookContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* ---------- PAGE BASE ---------- */
+  .page {
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    box-shadow:
+      0px 16px 38px rgba(0,0,0,0.55),
+      inset 0px 0px 20px rgba(0,0,0,0.14);
+  }
+
+  /* binding shadow */
+  .page::marker { display:none; }
+
+  /* ---------- COVER PAGE ---------- */
+  .page.cover-page {
+    background: linear-gradient(145deg, #5a2f1a, #2d140a);
+    border: 2px solid rgba(255,255,255,0.12);
+  }
+
+  .page.cover-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("https://www.transparenttextures.com/patterns/leather.png");
+    opacity: 0.32;
+    pointer-events: none;
+  }
+
+  .page.cover-page::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top, rgba(255,255,255,0.14), transparent 65%);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  /* ---------- INSIDE PAGES ---------- */
+  .page.inner-page {
+    background: linear-gradient(to bottom, #fffdf7, #f7f0dc);
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  /* paper texture */
+  .page.inner-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  /* darker edge shading like real paper */
+  .page.inner-page::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, rgba(0,0,0,0.10), transparent 12%),
+      linear-gradient(to left, rgba(0,0,0,0.08), transparent 12%),
+      linear-gradient(to bottom, rgba(0,0,0,0.10), transparent 18%),
+      linear-gradient(to top, rgba(0,0,0,0.12), transparent 15%);
+    opacity: 0.50;
+    pointer-events: none;
+  }
+
+  /* ---------- RULED LINES + MARGIN ---------- */
+  .ruled-lines {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 1;
+    background-image:
+      repeating-linear-gradient(
+        to bottom,
+        rgba(0, 110, 160, 0.20) 0px,
+        rgba(0, 110, 160, 0.20) 1px,
+        transparent 1px,
+        transparent 30px
+      ),
+      linear-gradient(
+        to right,
+        rgba(210, 40, 40, 0.26) 2px,
+        transparent 2px
+      );
+    background-size: 100% 30px, 2px 100%;
+    background-position: 0px 120px, 75px 0px;
+  }
+
+  /* TOP HEADER STRIP (real diary margin space) */
+  .top-margin-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 95px;
+    z-index: 3;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.65), rgba(255,255,255,0.0));
+    pointer-events: none;
+  }
+
+  /* ---------- PAGE INNER CONTENT ---------- */
+  .page-inner {
+    height: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 5;
+
+    padding: 125px 35px 95px 95px;
+  }
+
+  /* ---------- COVER INNER ---------- */
+  .cover-inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 25px;
+    color: #f4d7a4;
+  }
+
+  .cover-inner h1 {
+    font-family: "Homemade Apple", cursive;
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  .cover-inner p {
+    font-size: 1rem;
+    margin-top: 15px;
+    opacity: 0.85;
+  }
+
+  /* ---------- HANDWRITTEN TEXT ---------- */
+  .page-title {
+    font-family: "Homemade Apple", cursive;
+    font-size: 1.35rem;
+    margin-bottom: 18px;
+    color: rgba(12, 10, 9, 0.92);
+    letter-spacing: 0.4px;
+  }
+
+  .page-text {
+    font-family: "Homemade Apple", cursive;
+    font-size: 1.08rem;
+    line-height: 2.05;
+    color: rgba(10, 10, 10, 0.88);
+    white-space: pre-line;
+
+    text-shadow:
+      0px 0px 0.8px rgba(0,0,0,0.18),
+      0px 0px 1.2px rgba(0,0,0,0.08);
+  }
+
+  /* watermark */
+  .watermark {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    font-family: "Homemade Apple", cursive;
+    font-size: 0.95rem;
+    opacity: 0.18;
+    color: rgba(0, 60, 120, 0.60);
+    pointer-events: none;
+    z-index: 10;
+    transform: rotate(-2deg);
+  }
+
+  /* page number */
+  .page-number {
+    position: absolute;
+    bottom: 22px;
+    right: 26px;
+    font-family: "Inter", sans-serif;
+    font-size: 0.82rem;
+    opacity: 0.62;
+    color: rgba(0, 0, 0, 0.75);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* ---------- DOODLES (BLUE INK SVG) ---------- */
+  .doodle-svg {
+    position: absolute;
+    opacity: 0.78;
+    pointer-events: none;
+    z-index: 4;
+    stroke: rgba(0, 70, 150, 0.90);
+    fill: none;
+    stroke-width: 2.3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0px 0px 0.8px rgba(0,0,0,0.10));
+  }
+
+  /* scribble pen strokes */
+  .scribble {
+    position: absolute;
+    width: 120px;
+    height: 50px;
+    border-top: 3px solid rgba(0, 70, 150, 0.55);
+    border-radius: 50%;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 4;
+    transform: rotate(-6deg);
+  }
+
+  /* ink smudge */
+  .ink-smudge {
+    position: absolute;
+    width: 160px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(0,70,150,0.20), transparent 70%);
+    opacity: 0.11;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+    transform: rotate(-10deg);
+  }
+
+  /* tiny pen marks */
+  .pen-dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0, 70, 150, 0.38);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  /* ---------- MOBILE ---------- */
+  @media(max-width: 600px) {
     .book-wrapper {
-      width: 95%;
-      max-width: 520px;
-      height: 600px;
-      display: none;
-      position: relative;
+      height: 560px;
     }
 
-    #bookContainer {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* ---------- PAGE BASE ---------- */
-    .page {
-      position: relative;
-      overflow: hidden;
-      border-radius: 14px;
-      box-shadow:
-        0px 16px 38px rgba(0,0,0,0.50),
-        inset 0px 0px 18px rgba(0,0,0,0.10);
-    }
-
-    /* ---------- COVER PAGE (NOT ruled) ---------- */
-    .page.cover-page {
-      background: linear-gradient(145deg, #5a2f1a, #2d140a);
-      border: 2px solid rgba(255,255,255,0.12);
-    }
-
-    .page.cover-page::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: url("https://www.transparenttextures.com/patterns/leather.png");
-      opacity: 0.30;
-      pointer-events: none;
-    }
-
-    .page.cover-page::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top, rgba(255,255,255,0.14), transparent 65%);
-      opacity: 0.55;
-      pointer-events: none;
-    }
-
-    /* ---------- INSIDE PAGES (REAL DIARY PAPER) ---------- */
-    .page.inner-page {
-      background: linear-gradient(to bottom, #fffdf5, #f7f1e1);
-      border: 1px solid rgba(0,0,0,0.14);
-    }
-
-    /* paper fiber texture */
-    .page.inner-page::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-      opacity: 0.42;
-      pointer-events: none;
-    }
-
-    /* page edge shading realism */
-    .page.inner-page::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at left, rgba(0,0,0,0.08), transparent 45%),
-        radial-gradient(circle at right, rgba(0,0,0,0.07), transparent 45%),
-        radial-gradient(circle at bottom, rgba(0,0,0,0.10), transparent 60%);
-      opacity: 0.55;
-      pointer-events: none;
-    }
-
-    /* ---------- RULED LINES + MARGINS ---------- */
-    .ruled-lines {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-      opacity: 1;
-      background-image:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(0, 120, 160, 0.22) 0px,
-          rgba(0, 120, 160, 0.22) 1px,
-          transparent 1px,
-          transparent 32px
-        ),
-        linear-gradient(
-          to right,
-          rgba(220, 60, 60, 0.30) 2px,
-          transparent 2px
-        );
-      background-size: 100% 32px, 2px 100%;
-      background-position: 0px 115px, 65px 0px;
-    }
-
-    /* ---------- PAGE INNER CONTENT ---------- */
     .page-inner {
-      height: 100%;
-      box-sizing: border-box;
-      position: relative;
-      z-index: 5;
-
-      /* IMPORTANT: TOP & BOTTOM MARGINS */
-      padding: 110px 35px 85px 85px;
-    }
-
-    /* ---------- COVER INNER ---------- */
-    .cover-inner {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 40px 25px;
-      color: #f4d7a4;
-    }
-
-    .cover-inner h1 {
-      font-family: "Homemade Apple", cursive;
-      font-size: 2rem;
-      margin: 0;
-    }
-
-    .cover-inner p {
-      font-size: 1rem;
-      margin-top: 15px;
-      opacity: 0.85;
-    }
-
-    /* ---------- HANDWRITTEN TEXT ---------- */
-    .page-title {
-      font-family: "Homemade Apple", cursive;
-      font-size: 1.35rem;
-      margin-bottom: 18px;
-      color: rgba(20, 12, 10, 0.95);
+      padding: 125px 22px 95px 78px;
     }
 
     .page-text {
-      font-family: "Homemade Apple", cursive;
-      font-size: 1.08rem;
-      line-height: 2.05;
-      color: rgba(20, 12, 10, 0.92);
-      white-space: pre-line;
-
-      /* ink pen realism */
-      text-shadow:
-        0px 0px 0.8px rgba(0,0,0,0.25),
-        0px 0px 1.4px rgba(0,0,0,0.12);
+      font-size: 1rem;
     }
+  }
 
-    /* watermark */
-    .watermark {
-      position: absolute;
-      top: 22px;
-      right: 22px;
-      font-family: "Homemade Apple", cursive;
-      font-size: 0.95rem;
-      opacity: 0.22;
-      color: rgba(0, 60, 120, 0.60);
-      pointer-events: none;
-      z-index: 10;
-      transform: rotate(-2deg);
-    }
+  /* ---------- CONTROLS ---------- */
+  .controls {
+    position: absolute;
+    bottom: -60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9rem;
+    user-select: none;
+  }
 
-    /* page number */
-    .page-number {
-      position: absolute;
-      bottom: 22px;
-      right: 26px;
-      font-family: "Inter", sans-serif;
-      font-size: 0.82rem;
-      opacity: 0.65;
-      color: rgba(0, 0, 0, 0.72);
-      pointer-events: none;
-      z-index: 10;
-    }
+  .nav-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.85);
+    padding: 10px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.25s;
+    font-weight: 500;
+  }
 
-    /* ---------- DOODLES (BLUE INK SVG) ---------- */
-    .doodle-svg {
-      position: absolute;
-      opacity: 0.75;
-      pointer-events: none;
-      z-index: 4;
-      stroke: rgba(0, 70, 150, 0.88);
-      fill: none;
-      stroke-width: 2.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      filter: drop-shadow(0px 0px 0.8px rgba(0,0,0,0.10));
-    }
+  .nav-btn:hover {
+    background: rgba(255,255,255,0.2);
+  }
 
-    /* ink smudge */
-    .ink-smudge {
-      position: absolute;
-      width: 160px;
-      height: 120px;
-      background: radial-gradient(circle, rgba(0,70,150,0.22), transparent 70%);
-      opacity: 0.12;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 2;
-      transform: rotate(-10deg);
-    }
-
-    /* tiny pen marks */
-    .pen-dot {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(0, 70, 150, 0.40);
-      opacity: 0.35;
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    /* ---------- MOBILE ---------- */
-    @media(max-width: 600px) {
-      .book-wrapper {
-        height: 560px;
-      }
-
-      .page-inner {
-        padding: 110px 22px 85px 70px;
-      }
-
-      .page-text {
-        font-size: 1rem;
-      }
-    }
-
-    /* ---------- CONTROLS ---------- */
-    .controls {
-      position: absolute;
-      bottom: -60px;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 10px;
-      color: rgba(255,255,255,0.8);
-      font-size: 0.9rem;
-      user-select: none;
-    }
-
-    .nav-btn {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.25);
-      color: rgba(255,255,255,0.85);
-      padding: 10px 18px;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: 0.25s;
-      font-weight: 500;
-    }
-
-    .nav-btn:hover {
-      background: rgba(255,255,255,0.2);
-    }
-
-    .hint {
-      position: absolute;
-      top: -38px;
-      width: 100%;
-      text-align: center;
-      color: rgba(255,255,255,0.8);
-      font-size: 0.9rem;
-    }
-  </style>
+  .hint {
+    position: absolute;
+    top: -38px;
+    width: 100%;
+    text-align: center;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9rem;
+  }
+    </style>
 </head>
 
 <body>
@@ -409,198 +445,207 @@
 
   </div>
 
-  <script>
-    const music = document.getElementById("bgMusic");
+ <script>
+  const music = document.getElementById("bgMusic");
 
-    const pages = [
-      { layout: "cover" },
+  const pages = [
+    { layout: "cover" },
 
-      { title: "Promise Diary", text: `For Ruchi ❤️\n\n— Yours, Yash`, layout: "inner" },
+    { title: "Promise Diary", text: `For Ruchi ❤️\n\n— Yours, Yash`, layout: "inner" },
 
-      { title: "Promise #1", text: `Ruchi... I promise I’ll always choose you. Even in chaos. Even in silence. Even in the hardest days. Always you.`, layout: "inner" },
+    { title: "Promise #1", text: `Ruchi... I promise I’ll always choose you. Even in chaos. Even in silence. Even in the hardest days. Always you.`, layout: "inner" },
 
-      { title: "Promise #2", text: `I promise to always listen. Not just to your words... But to your moods. Your eyes. Your silence. Because you deserve to be understood.`, layout: "inner" },
+    { title: "Promise #2", text: `I promise to always listen. Not just to your words... But to your moods. Your eyes. Your silence. Because you deserve to be understood.`, layout: "inner" },
 
-      { title: "Promise #3", text: `Ruchi, I promise to make you laugh. Even when life feels heavy. And yes... I’ll annoy you a little too 😌❤️`, layout: "inner" },
+    { title: "Promise #3", text: `Ruchi, I promise to make you laugh. Even when life feels heavy. And yes... I’ll annoy you a little too 😌❤️`, layout: "inner" },
 
-      { title: "Promise #4", text: `I promise to be proud of you. In every phase. In every version. Even when you doubt yourself... I won’t.`, layout: "inner" },
+    { title: "Promise #4", text: `I promise to be proud of you. In every phase. In every version. Even when you doubt yourself... I won’t.`, layout: "inner" },
 
-      { title: "Promise #5", text: `I promise to protect your peace. Not by controlling your world... But by being the calm inside it.`, layout: "inner" },
+    { title: "Promise #5", text: `I promise to protect your peace. Not by controlling your world... But by being the calm inside it.`, layout: "inner" },
 
-      { title: "Promise #6", text: `Ruchi... I promise that your happiness will never feel like a burden to me. I want to be part of it.`, layout: "inner" },
+    { title: "Promise #6", text: `Ruchi... I promise that your happiness will never feel like a burden to me. I want to be part of it.`, layout: "inner" },
 
-      { title: "Promise #7", text: `I promise I’ll stay. Not only when things are cute... But also when things are messy. Because love is not temporary.`, layout: "inner" },
+    { title: "Promise #7", text: `I promise I’ll stay. Not only when things are cute... But also when things are messy. Because love is not temporary.`, layout: "inner" },
 
-      { title: "Promise #8", text: `I promise to hold your hand. In public. In private. In every storm. Ruchi, you won’t walk alone.`, layout: "inner" },
+    { title: "Promise #8", text: `I promise to hold your hand. In public. In private. In every storm. Ruchi, you won’t walk alone.`, layout: "inner" },
 
-      { title: "Promise #9", text: `I promise to love you softly. Not loudly. Not dramatically. But in a way that feels safe. And forever.`, layout: "inner" },
+    { title: "Promise #9", text: `I promise to love you softly. Not loudly. Not dramatically. But in a way that feels safe. And forever.`, layout: "inner" },
 
-      { title: "Promise #10", text: `Ruchi...My final promise is simple: I will never stop loving you. Not today. Not tomorrow. Not in any lifetime. — Yours, Yash ❤️`, layout: "inner" },
+    { title: "Promise #10", text: `Ruchi...My final promise is simple: I will never stop loving you. Not today. Not tomorrow. Not in any lifetime. — Yours, Yash ❤️`, layout: "inner" },
 
-      { title: "", text: "", layout: "blank" },
-      { title: "", text: "", layout: "blank" },
-      { title: "", text: "", layout: "blank" },
+    { title: "", text: "", layout: "blank" },
+    { title: "", text: "", layout: "blank" },
+    { title: "", text: "", layout: "blank" },
 
-      { title: "", text: `More promises will be written soon… ✍️❤️`, layout: "inner" }
+    { title: "", text: `More promises will be written soon… ✍️❤️`, layout: "inner" }
+  ];
+
+  function rand(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function generateDoodleSVG(x, y, size = 70) {
+    const doodles = [
+      `<path d="M40 65 C20 50, 10 35, 20 25 C28 15, 40 20, 40 30 C40 20, 55 15, 60 25 C70 38, 55 52, 40 65 Z"/>`,
+      `<path d="M40 10 L48 32 L72 32 L52 46 L60 70 L40 55 L20 70 L28 46 L8 32 L32 32 Z"/>`,
+      `<path d="M20 55 C10 55, 10 40, 22 40 C25 28, 40 25, 45 35 C55 28, 68 35, 62 48 C72 48, 72 62, 58 62 L22 62 C16 62, 14 55, 20 55 Z"/>`,
+      `<path d="M22 45 C22 30, 45 25, 52 40 C58 55, 35 62, 30 48 C25 36, 48 32, 58 44"/>`
     ];
 
-    function rand(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+    const chosen = doodles[Math.floor(Math.random() * doodles.length)];
+    const rotation = rand(-12, 12);
+
+    return `
+      <svg class="doodle-svg" style="top:${y}px; left:${x}px; width:${size}px; height:${size}px; transform: rotate(${rotation}deg);" viewBox="0 0 80 80">
+        ${chosen}
+      </svg>
+    `;
+  }
+
+  function generateFillerDoodles() {
+    let html = "";
+
+    // bottom filler doodles (main diary vibe)
+    const bottomCount = rand(4, 8);
+    for (let i = 0; i < bottomCount; i++) {
+      const x = rand(85, 320);
+      const y = rand(390, 520);
+      const size = rand(50, 85);
+      html += generateDoodleSVG(x, y, size);
     }
 
-    function generateDoodleSVG(x, y, size = 70) {
-      const doodles = [
-        `<path d="M40 65 C20 50, 10 35, 20 25 C28 15, 40 20, 40 30 C40 20, 55 15, 60 25 C70 38, 55 52, 40 65 Z"/>`,
-        `<path d="M40 10 L48 32 L72 32 L52 46 L60 70 L40 55 L20 70 L28 46 L8 32 L32 32 Z"/>`,
-        `<path d="M20 55 C10 55, 10 40, 22 40 C25 28, 40 25, 45 35 C55 28, 68 35, 62 48 C72 48, 72 62, 58 62 L22 62 C16 62, 14 55, 20 55 Z"/>`,
-        `<path d="M22 45 C22 30, 45 25, 52 40 C58 55, 35 62, 30 48 C25 36, 48 32, 58 44"/>`,
-        `<circle cx="40" cy="40" r="6"/>
-         <path d="M40 12 C34 20, 34 28, 40 30 C46 28, 46 20, 40 12 Z"/>
-         <path d="M68 40 C60 34, 52 34, 50 40 C52 46, 60 46, 68 40 Z"/>
-         <path d="M40 68 C34 60, 34 52, 40 50 C46 52, 46 60, 40 68 Z"/>
-         <path d="M12 40 C20 34, 28 34, 30 40 C28 46, 20 46, 12 40 Z"/>`
-      ];
+    // side margin doodles (small)
+    const marginCount = rand(2, 4);
+    for (let i = 0; i < marginCount; i++) {
+      const x = rand(20, 60);
+      const y = rand(200, 520);
+      const size = rand(35, 55);
+      html += generateDoodleSVG(x, y, size);
+    }
 
-      const chosen = doodles[Math.floor(Math.random() * doodles.length)];
-      const rotation = rand(-12, 12);
+    // scribble strokes
+    const scribbles = rand(2, 4);
+    for (let i = 0; i < scribbles; i++) {
+      html += `<div class="scribble" style="top:${rand(420, 530)}px; left:${rand(120, 260)}px; transform: rotate(${rand(-20, 20)}deg) scale(${(Math.random() * 0.5 + 0.8).toFixed(2)});"></div>`;
+    }
 
+    // tiny pen dots
+    const dots = rand(5, 10);
+    for (let i = 0; i < dots; i++) {
+      html += `<div class="pen-dot" style="top:${rand(140, 560)}px; left:${rand(80, 360)}px;"></div>`;
+    }
+
+    // subtle ink smudge
+    html += `<div class="ink-smudge" style="top:${rand(240, 480)}px; left:${rand(110, 240)}px;"></div>`;
+
+    return html;
+  }
+
+  function buildPageHTML(pageObj, index) {
+
+    if (pageObj.layout === "cover") {
       return `
-        <svg class="doodle-svg" style="top:${y}px; left:${x}px; width:${size}px; height:${size}px; transform: rotate(${rotation}deg);" viewBox="0 0 80 80">
-          ${chosen}
-        </svg>
+        <div class="cover-inner">
+          <h1>Promise Diary</h1>
+          <p>For Ruchi ❤️</p>
+          <p style="margin-top:18px;">— By Yash ✍️</p>
+        </div>
       `;
     }
 
-    function generateFillerDoodles() {
-      // These fill leftover page area like real diary scribbles
-      const count = rand(4, 9);
-      let html = "";
-
-      for (let i = 0; i < count; i++) {
-        const x = rand(20, 320);
-        const y = rand(140, 520);
-        const size = rand(45, 85);
-        html += generateDoodleSVG(x, y, size);
-      }
-
-      // extra tiny pen dots
-      const dots = rand(6, 14);
-      for (let i = 0; i < dots; i++) {
-        html += `<div class="pen-dot" style="top:${rand(120, 560)}px; left:${rand(30, 360)}px;"></div>`;
-      }
-
-      // subtle ink smudge
-      html += `<div class="ink-smudge" style="top:${rand(260, 460)}px; left:${rand(90, 220)}px;"></div>`;
-
-      return html;
-    }
-
-    function buildPageHTML(pageObj, index) {
-
-      // cover
-      if (pageObj.layout === "cover") {
-        return `
-          <div class="cover-inner">
-            <h1>Promise Diary</h1>
-            <p>For Ruchi ❤️</p>
-            <p style="margin-top:18px;">— By Yash ✍️</p>
-          </div>
-        `;
-      }
-
-      // blank pages
-      if (pageObj.layout === "blank") {
-        return `
-          <div class="ruled-lines"></div>
-          <div class="page-inner">
-            <div class="watermark">Ruchi 💌</div>
-            ${generateFillerDoodles()}
-            <div class="page-number">${index}</div>
-          </div>
-        `;
-      }
-
-      // realistic random handwriting shift + rotation
-      const shiftX = rand(-6, 12);
-      const shiftY = rand(-4, 14);
-      const tilt = (Math.random() * 1.2 - 0.6).toFixed(2);
-
+    if (pageObj.layout === "blank") {
       return `
         <div class="ruled-lines"></div>
-
+        <div class="top-margin-strip"></div>
         <div class="page-inner">
           <div class="watermark">Ruchi 💌</div>
-
-          <div style="transform: translate(${shiftX}px, ${shiftY}px) rotate(${tilt}deg); transform-origin: top left;">
-            <div class="page-title">${pageObj.title}</div>
-            <div class="page-text">${pageObj.text}</div>
-          </div>
-
           ${generateFillerDoodles()}
-
           <div class="page-number">${index}</div>
         </div>
       `;
     }
 
-    let pageFlip;
+    const shiftX = rand(-8, 10);
+    const shiftY = rand(-6, 14);
+    const tilt = (Math.random() * 1.0 - 0.5).toFixed(2);
 
-    function renderBook() {
-      const container = document.getElementById("bookContainer");
-      container.innerHTML = "";
+    return `
+      <div class="ruled-lines"></div>
+      <div class="top-margin-strip"></div>
 
-      pages.forEach((p, index) => {
-        const pageDiv = document.createElement("div");
+      <div class="page-inner">
+        <div class="watermark">Ruchi 💌</div>
 
-        if (p.layout === "cover") {
-          pageDiv.className = "page cover-page";
-        } else {
-          pageDiv.className = "page inner-page";
-        }
+        <div style="transform: translate(${shiftX}px, ${shiftY}px) rotate(${tilt}deg); transform-origin: top left;">
+          <div class="page-title">${pageObj.title}</div>
+          <div class="page-text">${pageObj.text}</div>
+        </div>
 
-        pageDiv.innerHTML = buildPageHTML(p, index);
-        container.appendChild(pageDiv);
-      });
+        ${generateFillerDoodles()}
 
-      pageFlip = new St.PageFlip(container, {
-        width: 380,
-        height: 560,
-        size: "stretch",
-        minWidth: 320,
-        maxWidth: 520,
-        minHeight: 500,
-        maxHeight: 650,
-        maxShadowOpacity: 0.55,
-        showCover: true,
-        mobileScrollSupport: false,
-        useMouseEvents: true,
-        flippingTime: 900
-      });
+        <div class="page-number">${index}</div>
+      </div>
+    `;
+  }
 
-      pageFlip.loadFromHTML(document.querySelectorAll("#bookContainer .page"));
+  let pageFlip;
 
-      pageFlip.on("flip", (e) => {
-        document.getElementById("pageIndicator").innerText =
-          `Page ${e.data + 1} / ${pages.length}`;
-      });
-    }
+  function renderBook() {
+    const container = document.getElementById("bookContainer");
+    container.innerHTML = "";
 
-    function goNext() {
-      if (pageFlip) pageFlip.flipNext();
-    }
+    pages.forEach((p, index) => {
+      const pageDiv = document.createElement("div");
 
-    function goPrev() {
-      if (pageFlip) pageFlip.flipPrev();
-    }
+      if (p.layout === "cover") {
+        pageDiv.className = "page cover-page";
+      } else {
+        pageDiv.className = "page inner-page";
+      }
 
-    function openDiary() {
-      document.getElementById("coverScreen").style.display = "none";
-      document.getElementById("bookWrapper").style.display = "block";
+      pageDiv.innerHTML = buildPageHTML(p, index);
+      container.appendChild(pageDiv);
+    });
 
-      renderBook();
-      music.play().catch(() => {});
-    }
-  </script>
+    pageFlip = new St.PageFlip(container, {
+      width: 380,
+      height: 560,
+      size: "stretch",
+      minWidth: 320,
+      maxWidth: 520,
+      minHeight: 500,
+      maxHeight: 650,
+      maxShadowOpacity: 0.65,
+      showCover: true,
+      mobileScrollSupport: false,
+      useMouseEvents: true,
+      flippingTime: 900
+    });
+
+    pageFlip.loadFromHTML(document.querySelectorAll("#bookContainer .page"));
+
+    pageFlip.on("flip", (e) => {
+      document.getElementById("pageIndicator").innerText =
+        `Page ${e.data + 1} / ${pages.length}`;
+    });
+  }
+
+  function goNext() {
+    if (pageFlip) pageFlip.flipNext();
+  }
+
+  function goPrev() {
+    if (pageFlip) pageFlip.flipPrev();
+  }
+
+  function openDiary() {
+    document.getElementById("coverScreen").style.display = "none";
+    document.getElementById("bookWrapper").style.display = "block";
+
+    renderBook();
+    music.play().catch(() => {});
+  }
+    </script>
 
 </body>
 </html>
