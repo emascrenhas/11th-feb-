@@ -113,99 +113,145 @@
       align-items: center;
     }
 
-/* ---------- PAGE STYLE ---------- */
+/* ---------- PAGE BASE ---------- */
 .page {
-  background: #f8f1df;
-  border-radius: 12px;
-  overflow: hidden;
   position: relative;
-  border: 1px solid rgba(0,0,0,0.12);
+  overflow: hidden;
+  border-radius: 12px;
   box-shadow:
     0px 12px 28px rgba(0,0,0,0.35),
     inset 0px 0px 20px rgba(0,0,0,0.08);
 }
 
-/* paper texture */
-.page::before {
+/* ---------- COVER PAGE (leather, NOT ruled) ---------- */
+.page.cover-page {
+  background: linear-gradient(145deg, #5a2f1a, #2d140a);
+  border: 2px solid rgba(255,255,255,0.12);
+}
+
+.page.cover-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("https://www.transparenttextures.com/patterns/leather.png");
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+.page.cover-page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(255,255,255,0.12), transparent 60%);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ---------- INSIDE PAGES (ruled diary) ---------- */
+.page.inner-page {
+  background: #fbf6e9;
+  border: 1px solid rgba(0,0,0,0.14);
+}
+
+/* paper fiber texture */
+.page.inner-page::before {
   content: "";
   position: absolute;
   inset: 0;
   background: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-  opacity: 0.35;
+  opacity: 0.38;
   pointer-events: none;
 }
 
-/* ruled lines */
-.page::after {
+/* ruled teal lines + red margin line */
+.page.inner-page::after {
   content: "";
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to bottom, rgba(70, 130, 255, 0.18) 1px, transparent 1px),
-    linear-gradient(to right, rgba(255, 0, 0, 0.20) 2px, transparent 2px);
-  background-size: 100% 34px, 2px 100%;
-  background-position: 0px 72px, 52px 0px;
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 120, 160, 0.22) 0px,
+      rgba(0, 120, 160, 0.22) 1px,
+      transparent 1px,
+      transparent 32px
+    ),
+    linear-gradient(
+      to right,
+      rgba(220, 60, 60, 0.28) 2px,
+      transparent 2px
+    );
+  background-size: 100% 32px, 2px 100%;
+  background-position: 0px 75px, 55px 0px;
   pointer-events: none;
-  opacity: 0.95;
+  opacity: 1;
 }
 
-/* page inner */
+/* ---------- PAGE INNER ---------- */
 .page-inner {
-  padding: 70px 28px 50px;
   height: 100%;
   box-sizing: border-box;
   position: relative;
-  z-index: 2;
+  z-index: 5;
+  padding: 72px 28px 55px;
 }
 
-/* diary title */
+/* cover page inner */
+.cover-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 25px;
+  color: #f4d7a4;
+}
+
+.cover-inner h1 {
+  font-family: "Homemade Apple", cursive;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.cover-inner p {
+  font-size: 1rem;
+  margin-top: 15px;
+  opacity: 0.85;
+}
+
+/* ---------- HANDWRITTEN TEXT ---------- */
 .page-title {
   font-family: "Homemade Apple", cursive;
   font-size: 1.35rem;
-  margin-bottom: 18px;
-  color: rgba(30, 20, 15, 0.92);
-  text-shadow: 0px 0px 1px rgba(0,0,0,0.25);
+  margin-bottom: 16px;
+  color: rgba(25, 15, 10, 0.92);
 }
 
-/* ---------- HANDWRITTEN INK EFFECT ---------- */
 .page-text {
   font-family: "Homemade Apple", cursive;
   font-size: 1.08rem;
   line-height: 2.05;
-  color: rgba(35, 18, 10, 0.92);
+  color: rgba(20, 12, 10, 0.92);
   white-space: pre-line;
 
-  /* ink effect */
+  /* pen ink effect */
   text-shadow:
     0px 0px 0.8px rgba(0,0,0,0.25),
-    0px 0px 1.5px rgba(0,0,0,0.12);
-  filter: contrast(1.1) saturate(0.9);
-}
-
-/* ink stains / imperfect diary look */
-.ink-smudge {
-  position: absolute;
-  width: 160px;
-  height: 120px;
-  background: radial-gradient(circle, rgba(0,0,0,0.12), transparent 70%);
-  opacity: 0.18;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-  transform: rotate(-12deg);
+    0px 0px 1.4px rgba(0,0,0,0.12);
 }
 
 /* watermark */
 .watermark {
   position: absolute;
   top: 14px;
-  right: 18px;
+  right: 16px;
   font-family: "Homemade Apple", cursive;
   font-size: 0.9rem;
-  opacity: 0.25;
-  color: rgba(50, 20, 10, 0.9);
-  z-index: 5;
+  opacity: 0.22;
+  color: rgba(0, 60, 120, 0.55);
   pointer-events: none;
+  z-index: 6;
 }
 
 /* page number */
@@ -216,31 +262,50 @@
   font-family: "Inter", sans-serif;
   font-size: 0.8rem;
   opacity: 0.55;
-  color: rgba(30, 20, 15, 0.9);
-  z-index: 5;
+  color: rgba(0, 0, 0, 0.7);
   pointer-events: none;
+  z-index: 6;
 }
 
-/* doodles */
-.doodle {
+/* ---------- DOODLES (BLUE INK SVG) ---------- */
+.doodle-svg {
   position: absolute;
-  font-size: 1.35rem;
-  opacity: 0.35;
+  width: 78px;
+  height: 78px;
+  opacity: 0.55;
   pointer-events: none;
-  user-select: none;
-  z-index: 3;
+  z-index: 4;
+  stroke: rgba(0, 70, 150, 0.85);
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0px 0px 0.8px rgba(0,0,0,0.1));
 }
 
-/* MOBILE */
+/* ink smudge */
+.ink-smudge {
+  position: absolute;
+  width: 140px;
+  height: 110px;
+  background: radial-gradient(circle, rgba(0,70,150,0.18), transparent 70%);
+  opacity: 0.12;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  transform: rotate(-12deg);
+}
+
+/* mobile */
 @media(max-width: 600px) {
   .page-inner {
-    padding: 65px 18px 45px;
+    padding: 70px 18px 50px;
   }
 
   .page-text {
     font-size: 0.98rem;
   }
-}
+                      }
     /* ---------- CONTROLS ---------- */
     .controls {
       position: absolute;
@@ -323,6 +388,7 @@
     const doodles = ["❤️", "✨", "🌸", "💍", "🧸", "🌙", "⭐", "🍫", "💌", "🎀", "🌹", "🫶"];
 
     const pages = [
+      { title: "", text: "", layout: "cover" },
       { title: "Promise Diary", text: `For Ruchi ❤️\n\n— Yours, Yash`, type: "cover" },
 
       { title: "Promise #1", text: `Ruchi... I promise I’ll always choose you. Even in chaos. Even in silence. Even in the hardest days. Always you.` },
@@ -357,67 +423,120 @@
     }
 
     function buildPageHTML(pageObj, index) {
-  let titleHTML = pageObj.title ? `<div class="page-title">${pageObj.title}</div>` : "";
-  let textHTML = pageObj.text ? `<div class="page-text">${pageObj.text}</div>` : "";
 
-  // watermark on every page
-  let watermarkHTML = `<div class="watermark">Ruchi 💌</div>`;
-
-  // page number (starts from 1)
-  let pageNumberHTML = `<div class="page-number">${index + 1}</div>`;
-
-  // ink smudge random placement
-  let smudgeTop = randomBetween(120, 360);
-  let smudgeLeft = randomBetween(40, 180);
-
-  let smudgeHTML = `
-    <div class="ink-smudge" style="top:${smudgeTop}px; left:${smudgeLeft}px;"></div>
-  `;
-
-  // doodles (random but subtle)
-  let doodleCount = 0;
-  if (pageObj.text.trim() === "") doodleCount = 0;
-  else doodleCount = randomBetween(1, 2);
-
-  let doodleHTML = "";
-
-  for (let i = 0; i < doodleCount; i++) {
-    let d = doodles[Math.floor(Math.random() * doodles.length)];
-    let top = randomBetween(90, 430);
-    let left = randomBetween(40, 260);
-    let rot = randomBetween(-18, 18);
-
-    doodleHTML += `
-      <div class="doodle" style="top:${top}px; left:${left}px; transform:rotate(${rot}deg);">
-        ${d}
+  // cover page
+  if (pageObj.layout === "cover") {
+    return `
+      <div class="cover-inner">
+        <h1>Promise Diary</h1>
+        <p>For Ruchi ❤️</p>
+        <p style="margin-top:18px;">— By Yash ✍️</p>
       </div>
     `;
   }
 
+  // blank page
+  if (!pageObj || pageObj.layout === "blank") {
+    return `
+      <div class="page-inner">
+        <div class="watermark">Ruchi 💌</div>
+        <div class="page-number">${index + 1}</div>
+      </div>
+    `;
+  }
+
+  // random safe text block shift (looks natural)
+  const padLeft = randomBetween(5, 22);
+  const padTop = randomBetween(0, 18);
+
+  // doodles must NOT overlap text:
+  // So we place doodles near top-right / bottom-left safe zones only.
+  const doodlePositions = [
+    { top: 95, left: 255 },
+    { top: 135, left: 40 },
+    { top: 360, left: 260 },
+    { top: 410, left: 55 }
+  ];
+
+  const chosen = doodlePositions[Math.floor(Math.random() * doodlePositions.length)];
+
+  const doodleHTML = generateDoodleSVG(chosen.top, chosen.left);
+
+  // ink smudge subtle
+  const smudgeHTML = `
+    <div class="ink-smudge" style="top:${randomBetween(220, 380)}px; left:${randomBetween(30, 180)}px;"></div>
+  `;
+
   return `
     <div class="page-inner">
-      ${watermarkHTML}
-      ${titleHTML}
-      ${textHTML}
-      ${doodleHTML}
-      ${pageNumberHTML}
+      <div class="watermark">Ruchi 💌</div>
       ${smudgeHTML}
+
+      <div style="padding-left:${padLeft}px; padding-top:${padTop}px;">
+        <div class="page-title">${pageObj.title}</div>
+        <div class="page-text">${pageObj.text}</div>
+      </div>
+
+      ${doodleHTML}
+      <div class="page-number">${index + 1}</div>
     </div>
   `;
     }
 
+    function randomBetween(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function generateDoodleSVG(top, left) {
+  const doodles = [
+    // heart doodle
+    `<path d="M40 65 C20 50, 10 35, 20 25 C28 15, 40 20, 40 30 C40 20, 55 15, 60 25 C70 38, 55 52, 40 65 Z"/>`,
+
+    // flower doodle
+    `<circle cx="40" cy="40" r="6"/>
+     <path d="M40 12 C34 20, 34 28, 40 30 C46 28, 46 20, 40 12 Z"/>
+     <path d="M68 40 C60 34, 52 34, 50 40 C52 46, 60 46, 68 40 Z"/>
+     <path d="M40 68 C34 60, 34 52, 40 50 C46 52, 46 60, 40 68 Z"/>
+     <path d="M12 40 C20 34, 28 34, 30 40 C28 46, 20 46, 12 40 Z"/>`,
+
+    // star doodle
+    `<path d="M40 10 L48 32 L72 32 L52 46 L60 70 L40 55 L20 70 L28 46 L8 32 L32 32 Z"/>`,
+
+    // cloud doodle
+    `<path d="M20 55 C10 55, 10 40, 22 40 C25 28, 40 25, 45 35 C55 28, 68 35, 62 48 C72 48, 72 62, 58 62 L22 62 C16 62, 14 55, 20 55 Z"/>`,
+
+    // cute swirl
+    `<path d="M22 45 C22 30, 45 25, 52 40 C58 55, 35 62, 30 48 C25 36, 48 32, 58 44"/>`
+  ];
+
+  const chosen = doodles[Math.floor(Math.random() * doodles.length)];
+
+  return `
+    <svg class="doodle-svg" style="top:${top}px; left:${left}px;" viewBox="0 0 80 80">
+      ${chosen}
+    </svg>
+  `;
+}
+    
     let pageFlip;
 
     function renderBook() {
       const container = document.getElementById("bookContainer");
       container.innerHTML = "";
 
-      pages.forEach((p, index) => {
-        const pageDiv = document.createElement("div");
-        pageDiv.className = "page";
-        pageDiv.innerHTML = buildPageHTML(p, index);
-        container.appendChild(pageDiv);
-      });
+     pages.forEach((p, index) => {
+  const pageDiv = document.createElement("div");
+
+  if (p.layout === "cover") {
+    pageDiv.className = "page cover-page";
+    pageDiv.innerHTML = buildPageHTML(p, index);
+  } else {
+    pageDiv.className = "page inner-page";
+    pageDiv.innerHTML = buildPageHTML(p, index);
+  }
+
+  container.appendChild(pageDiv);
+});
 
       pageFlip = new St.PageFlip(container, {
         width: 360,
