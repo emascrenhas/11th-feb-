@@ -7,7 +7,9 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-   <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
+
+  <!-- PageFlip Library -->
+  <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
 
   <style>
     body {
@@ -96,53 +98,61 @@
 
     /* ---------- BOOK WRAPPER ---------- */
     .book-wrapper {
-      width: 90%;
-      max-width: 900px;
-      height: 520px;
-      perspective: 1600px;
+      width: 95%;
+      max-width: 500px;
+      height: 560px;
       display: none;
       position: relative;
     }
 
-    .book {
+    #bookContainer {
       width: 100%;
       height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* ---------- PAGES ---------- */
+    /* ---------- PAGE STYLE ---------- */
     .page {
-      width: 50%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      overflow: hidden;
       background: #f7f0df;
       border-radius: 12px;
+      overflow: hidden;
       box-shadow: inset 0px 0px 25px rgba(0,0,0,0.08);
       border: 1px solid rgba(0,0,0,0.08);
-      background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-    }
-
-    .left-page {
-      left: 0;
-      border-right: 2px solid rgba(0,0,0,0.12);
-    }
-
-    .right-page {
-      right: 0;
-      border-left: 2px solid rgba(0,0,0,0.12);
-    }
-
-    /* ---------- CONTENT ---------- */
-    .page-content {
-      padding: 35px 28px;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
       position: relative;
+    }
+
+    /* Paper fiber texture */
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    /* Ruled notebook lines */
+    .page::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to bottom, rgba(50, 100, 255, 0.18) 1px, transparent 1px),
+        linear-gradient(to right, rgba(255, 0, 0, 0.18) 2px, transparent 2px);
+      background-size: 100% 34px, 2px 100%;
+      background-position: 0px 55px, 45px 0px;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    .page-inner {
+      padding: 55px 28px 30px;
+      height: 100%;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 2;
     }
 
     .page-title {
@@ -154,154 +164,27 @@
 
     .page-text {
       font-family: "Homemade Apple", cursive;
-      font-size: 1.1rem;
-      line-height: 1.9;
+      font-size: 1.08rem;
+      line-height: 2;
       color: #2a1b12;
       white-space: pre-line;
-      flex: 1;
     }
 
-    /* ---------- PHOTO STYLE (printed in diary) ---------- */
-    .photo {
-      width: 140px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 10px;
-      box-shadow: 0px 10px 18px rgba(0,0,0,0.25);
-      border: 2px solid rgba(255,255,255,0.6);
-      filter: contrast(0.95) saturate(0.9);
-      background: rgba(255,255,255,0.4);
-    }
-
-    .photo.small {
-      width: 110px;
-      height: 95px;
-    }
-
-    /* ---------- PHOTO LAYOUTS ---------- */
-    .layout-top-center {
-      align-items: center;
-    }
-
-    .layout-top-center .photo-wrap {
-      margin-bottom: 18px;
-    }
-
-    .layout-side-right {
-      flex-direction: row;
-      gap: 18px;
-    }
-
-    .layout-side-right .page-text {
-      flex: 1;
-    }
-
-    .layout-side-right .photo-wrap {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
-
-    .layout-side-left {
-      flex-direction: row;
-      gap: 18px;
-    }
-
-    .layout-side-left .photo-wrap {
-      order: -1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .layout-bottom-left {
-      position: relative;
-    }
-
-    .layout-bottom-left .photo-wrap {
+    /* ---------- DOODLES ---------- */
+    .doodle {
       position: absolute;
-      bottom: 35px;
-      left: 25px;
-      transform: rotate(-4deg);
-    }
-
-    .layout-bottom-right {
-      position: relative;
-    }
-
-    .layout-bottom-right .photo-wrap {
-      position: absolute;
-      bottom: 35px;
-      right: 25px;
-      transform: rotate(4deg);
-    }
-
-    .layout-two-photos {
-      position: relative;
-    }
-
-    .layout-two-photos .photo-wrap {
-      position: absolute;
-      top: 70px;
-      right: 25px;
-      transform: rotate(5deg);
-    }
-
-    .layout-two-photos .photo-wrap.second {
-      top: 230px;
-      left: 25px;
-      transform: rotate(-6deg);
-    }
-
-    /* ---------- FLIP PAGE (RIGHT PAGE FLIPS TO LEFT) ---------- */
-    .flip-page {
-      width: 50%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      right: 0;
-      transform-origin: left center;
-      transform-style: preserve-3d;
-      z-index: 10;
-      border-radius: 12px;
-    }
-
-    .flip-front,
-    .flip-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #f7f0df;
-      border-left: 2px solid rgba(0,0,0,0.12);
-      box-shadow: inset 0px 0px 25px rgba(0,0,0,0.08);
-      background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-    }
-
-    .flip-front {
-      transform: rotateY(0deg);
-    }
-
-    .flip-back {
-      transform: rotateY(180deg);
-      border-left: none;
-      border-right: 2px solid rgba(0,0,0,0.12);
-    }
-
-    .flipping {
-      animation: flipAnim 0.9s ease-in-out forwards;
-    }
-
-    @keyframes flipAnim {
-      0% { transform: rotateY(0deg); }
-      100% { transform: rotateY(-180deg); }
+      font-size: 1.3rem;
+      opacity: 0.4;
+      transform: rotate(-8deg);
+      pointer-events: none;
+      user-select: none;
+      z-index: 3;
     }
 
     /* ---------- CONTROLS ---------- */
     .controls {
       position: absolute;
-      bottom: -55px;
+      bottom: -60px;
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -337,45 +220,19 @@
     }
 
     /* ---------- MOBILE ---------- */
-    @media(max-width: 768px) {
+    @media(max-width: 600px) {
       .book-wrapper {
-        height: 480px;
+        max-width: 360px;
+        height: 520px;
       }
 
-      .page-content {
-        padding: 25px 18px;
+      .page-inner {
+        padding: 50px 18px 25px;
       }
 
       .page-text {
-        font-size: 1rem;
+        font-size: 0.98rem;
       }
-
-      .photo {
-        width: 110px;
-        height: 95px;
-      }
-
-      #bookContainer {
-  width: 100%;
-  height: 520px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.page {
-  background: #f7f0df;
-  border-radius: 12px;
-  background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-  overflow: hidden;
-}
-
-.page-inner {
-  padding: 30px 22px;
-  height: 100%;
-  box-sizing: border-box;
-}
-      
     }
   </style>
 </head>
@@ -399,171 +256,147 @@
   </div>
 
   <!-- Book -->
-  <div class="book-wrapper" id="bookWrapper" style="display:none;">
+  <div class="book-wrapper" id="bookWrapper">
 
-  <div class="hint">Swipe left/right to turn pages ✨</div>
+    <div class="hint">Swipe left/right to turn pages ✨</div>
 
-  <div id="bookContainer"></div>
-
-  <div class="controls">
-    <button class="nav-btn" onclick="goPrev()">⬅ Back</button>
-    <div id="pageIndicator">Page 1</div>
-    <button class="nav-btn" onclick="goNext()">Next ➡</button>
-  </div>
-
-  </div>
+    <div id="bookContainer"></div>
 
     <div class="controls">
-      <button class="nav-btn" onclick="prevSpread()">⬅ Back</button>
-      <div id="pageIndicator">Spread 1</div>
-      <button class="nav-btn" onclick="nextSpread()">Next ➡</button>
+      <button class="nav-btn" onclick="goPrev()">⬅ Back</button>
+      <div id="pageIndicator">Page 1</div>
+      <button class="nav-btn" onclick="goNext()">Next ➡</button>
     </div>
+
   </div>
 
   <script>
-  const music = document.getElementById("bgMusic");
+    const music = document.getElementById("bgMusic");
 
-  const pages = [
-    { title: "Promise #1", text: `Ruchi... I promise I’ll always choose you. Even in chaos. Even in silence. Even in the hardest days. Always you.`, layout: "top-center", photos: ["photo1.jpg"] },
+    // DOODLES (auto generated, no images needed)
+    const doodles = ["❤️", "✨", "🌸", "💍", "🧸", "🌙", "⭐", "🍫", "💌", "🎀", "🌹", "🫶"];
 
-    { title: "Promise #2", text: `I promise to always listen. Not just to your words... But to your moods. Your eyes. Your silence. Because you deserve to be understood.`, layout: "side-right", photos: ["photo2.jpg"] },
+    const pages = [
+      { title: "Promise Diary", text: `For Ruchi ❤️\n\n— Yours, Yash`, type: "cover" },
 
-    { title: "Promise #3", text: `Ruchi, I promise to make you laugh. Even when life feels heavy. And yes... I’ll annoy you a little too 😌❤️`, layout: "bottom-left", photos: ["photo3.jpg"] },
+      { title: "Promise #1", text: `Ruchi... I promise I’ll always choose you. Even in chaos. Even in silence. Even in the hardest days. Always you.` },
 
-    { title: "Promise #4", text: `I promise to be proud of you. In every phase. In every version. Even when you doubt yourself... I won’t.`, layout: "side-left", photos: ["photo4.jpg"] },
+      { title: "Promise #2", text: `I promise to always listen. Not just to your words... But to your moods. Your eyes. Your silence. Because you deserve to be understood.` },
 
-    { title: "Promise #5", text: `I promise to protect your peace. Not by controlling your world... But by being the calm inside it.`, layout: "top-center", photos: ["photo5.jpg", "photo6.jpg"] },
+      { title: "Promise #3", text: `Ruchi, I promise to make you laugh. Even when life feels heavy. And yes... I’ll annoy you a little too 😌❤️` },
 
-    { title: "Promise #6", text: `Ruchi... I promise that your happiness will never feel like a burden to me. I want to be part of it.`, layout: "bottom-right", photos: ["photo7.jpg"] },
+      { title: "Promise #4", text: `I promise to be proud of you. In every phase. In every version. Even when you doubt yourself... I won’t.` },
 
-    { title: "Promise #7", text: `I promise I’ll stay. Not only when things are cute... But also when things are messy. Because love is not temporary.`, layout: "side-right", photos: ["photo8.jpg"] },
+      { title: "Promise #5", text: `I promise to protect your peace. Not by controlling your world... But by being the calm inside it.` },
 
-    { title: "Promise #8", text: `I promise to hold your hand. In public. In private. In every storm. Ruchi, you won’t walk alone.`, layout: "top-center", photos: ["photo9.jpg"] },
+      { title: "Promise #6", text: `Ruchi... I promise that your happiness will never feel like a burden to me. I want to be part of it.` },
 
-    { title: "Promise #9", text: `I promise to love you softly. Not loudly. Not dramatically. But in a way that feels safe. And forever.`, layout: "bottom-left", photos: ["photo10.jpg"] },
+      { title: "Promise #7", text: `I promise I’ll stay. Not only when things are cute... But also when things are messy. Because love is not temporary.` },
 
-    { title: "Promise #10", text: `Ruchi...My final promise is simple: I will never stop loving you. Not today. Not tomorrow. Not in any lifetime. — Yours, Yash ❤️`, layout: "two-photos", photos: ["photo11.jpg", "photo12.jpg"] },
+      { title: "Promise #8", text: `I promise to hold your hand. In public. In private. In every storm. Ruchi, you won’t walk alone.` },
 
-    { title: "", text: "", layout: "blank", photos: [] },
-    { title: "", text: "", layout: "blank", photos: [] },
-    { title: "", text: "", layout: "blank", photos: [] },
+      { title: "Promise #9", text: `I promise to love you softly. Not loudly. Not dramatically. But in a way that feels safe. And forever.` },
 
-    { title: "", text: `More promises will be written soon… ✍️❤️`, layout: "top-center", photos: [] }
-  ];
+      { title: "Promise #10", text: `Ruchi...My final promise is simple: I will never stop loving you. Not today. Not tomorrow. Not in any lifetime. — Yours, Yash ❤️` },
 
-  function buildPageHTML(pageObj) {
-    if (!pageObj || pageObj.layout === "blank") {
-      return `<div class="page-inner"></div>`;
+      { title: "", text: "" },
+      { title: "", text: "" },
+      { title: "", text: "" },
+
+      { title: "", text: `More promises will be written soon… ✍️❤️` }
+    ];
+
+    function randomBetween(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    let photosHTML = "";
+    function buildPageHTML(pageObj, index) {
+      let titleHTML = pageObj.title ? `<div class="page-title">${pageObj.title}</div>` : "";
+      let textHTML = pageObj.text ? `<div class="page-text">${pageObj.text}</div>` : "";
 
-    if (pageObj.photos.length === 1) {
-      photosHTML = `
-        <div class="photo-wrap" style="transform: rotate(${Math.random() * 6 - 3}deg); margin-bottom:18px;">
-          <img class="photo" src="${pageObj.photos[0]}" alt="memory">
-        </div>
-      `;
-    }
+      // Add doodles randomly (but not too many)
+      let doodleCount = 0;
 
-    if (pageObj.photos.length === 2) {
-      photosHTML = `
-        <div class="photo-wrap" style="transform: rotate(5deg); margin-bottom:18px;">
-          <img class="photo" src="${pageObj.photos[0]}" alt="memory">
-        </div>
-        <div class="photo-wrap" style="transform: rotate(-6deg); margin-bottom:18px;">
-          <img class="photo small" src="${pageObj.photos[1]}" alt="memory">
-        </div>
-      `;
-    }
+      if (pageObj.type === "cover") doodleCount = 1;
+      else if (pageObj.text.trim() === "") doodleCount = 0;
+      else doodleCount = randomBetween(1, 2);
 
-    let layoutHTML = "";
+      let doodleHTML = "";
 
-    if (pageObj.layout === "side-right") {
-      layoutHTML = `
-        <div style="display:flex; gap:14px; align-items:flex-start;">
-          <div style="flex:1;">
-            <div class="page-title">${pageObj.title}</div>
-            <div class="page-text">${pageObj.text}</div>
+      for (let i = 0; i < doodleCount; i++) {
+        let d = doodles[Math.floor(Math.random() * doodles.length)];
+        let top = randomBetween(70, 430);
+        let left = randomBetween(40, 250);
+        let rot = randomBetween(-18, 18);
+
+        doodleHTML += `
+          <div class="doodle" style="top:${top}px; left:${left}px; transform:rotate(${rot}deg);">
+            ${d}
           </div>
-          <div>${photosHTML}</div>
+        `;
+      }
+
+      return `
+        <div class="page-inner">
+          ${titleHTML}
+          ${textHTML}
+          ${doodleHTML}
         </div>
-      `;
-    } 
-    else if (pageObj.layout === "side-left") {
-      layoutHTML = `
-        <div style="display:flex; gap:14px; align-items:flex-start;">
-          <div>${photosHTML}</div>
-          <div style="flex:1;">
-            <div class="page-title">${pageObj.title}</div>
-            <div class="page-text">${pageObj.text}</div>
-          </div>
-        </div>
-      `;
-    } 
-    else {
-      layoutHTML = `
-        <div class="page-title">${pageObj.title}</div>
-        ${pageObj.layout === "top-center" ? photosHTML : ""}
-        <div class="page-text">${pageObj.text}</div>
-        ${pageObj.layout === "bottom-left" || pageObj.layout === "bottom-right" || pageObj.layout === "two-photos" ? photosHTML : ""}
       `;
     }
 
-    return `<div class="page-inner">${layoutHTML}</div>`;
-  }
+    let pageFlip;
 
-  let pageFlip;
+    function renderBook() {
+      const container = document.getElementById("bookContainer");
+      container.innerHTML = "";
 
-  function renderBook() {
-    const container = document.getElementById("bookContainer");
-    container.innerHTML = "";
+      pages.forEach((p, index) => {
+        const pageDiv = document.createElement("div");
+        pageDiv.className = "page";
+        pageDiv.innerHTML = buildPageHTML(p, index);
+        container.appendChild(pageDiv);
+      });
 
-    pages.forEach((p) => {
-      const pageDiv = document.createElement("div");
-      pageDiv.className = "page";
-      pageDiv.innerHTML = buildPageHTML(p);
-      container.appendChild(pageDiv);
-    });
+      pageFlip = new St.PageFlip(container, {
+        width: 360,
+        height: 520,
+        size: "stretch",
+        minWidth: 320,
+        maxWidth: 500,
+        minHeight: 450,
+        maxHeight: 600,
+        maxShadowOpacity: 0.45,
+        showCover: true,
+        mobileScrollSupport: false,
+        useMouseEvents: true,
+        flippingTime: 850
+      });
 
-    pageFlip = new St.PageFlip(container, {
-      width: 420,
-      height: 520,
-      size: "stretch",
-      minWidth: 300,
-      maxWidth: 900,
-      minHeight: 420,
-      maxHeight: 650,
-      maxShadowOpacity: 0.35,
-      showCover: true,
-      mobileScrollSupport: false,
-      useMouseEvents: true
-    });
+      pageFlip.loadFromHTML(document.querySelectorAll("#bookContainer .page"));
 
-    pageFlip.loadFromHTML(document.querySelectorAll("#bookContainer .page"));
+      pageFlip.on("flip", (e) => {
+        document.getElementById("pageIndicator").innerText =
+          `Page ${e.data + 1} / ${pages.length}`;
+      });
+    }
 
-    pageFlip.on("flip", (e) => {
-      document.getElementById("pageIndicator").innerText =
-        `Page ${e.data + 1} / ${pages.length}`;
-    });
-  }
+    function goNext() {
+      if (pageFlip) pageFlip.flipNext();
+    }
 
-  function goNext() {
-    if (pageFlip) pageFlip.flipNext();
-  }
+    function goPrev() {
+      if (pageFlip) pageFlip.flipPrev();
+    }
 
-  function goPrev() {
-    if (pageFlip) pageFlip.flipPrev();
-  }
+    function openDiary() {
+      document.getElementById("coverScreen").style.display = "none";
+      document.getElementById("bookWrapper").style.display = "block";
 
-  function openDiary() {
-    document.getElementById("coverScreen").style.display = "none";
-    document.getElementById("bookWrapper").style.display = "block";
+      renderBook();
 
-    renderBook();
-
-    music.play().catch(() => {});
-  }
+      music.play().catch(() => {});
+    }
   </script>
 
 </body>
