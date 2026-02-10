@@ -7,6 +7,7 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
 
   <style>
     body {
@@ -376,32 +377,19 @@
   </div>
 
   <!-- Book -->
-  <div class="book-wrapper" id="bookWrapper">
-    <div class="hint">Swipe left/right or use buttons to turn pages ✨</div>
+  <div class="book-wrapper" id="bookWrapper" style="display:none;">
 
-    <div class="book" id="book">
+  <div class="hint">Swipe left/right to turn pages ✨</div>
 
-      <!-- Static Left Page -->
-      <div class="page left-page">
-        <div class="page-content" id="leftContent"></div>
-      </div>
+  <div id="bookContainer"></div>
 
-      <!-- Static Right Page -->
-      <div class="page right-page">
-        <div class="page-content" id="rightContent"></div>
-      </div>
+  <div class="controls">
+    <button class="nav-btn" onclick="goPrev()">⬅ Back</button>
+    <div id="pageIndicator">Page 1</div>
+    <button class="nav-btn" onclick="goNext()">Next ➡</button>
+  </div>
 
-      <!-- Flip Page (animated) -->
-      <div class="flip-page" id="flipPage" style="display:none;">
-        <div class="flip-front">
-          <div class="page-content" id="flipFrontContent"></div>
-        </div>
-        <div class="flip-back">
-          <div class="page-content" id="flipBackContent"></div>
-        </div>
-      </div>
-
-    </div>
+  </div>
 
     <div class="controls">
       <button class="nav-btn" onclick="prevSpread()">⬅ Back</button>
@@ -411,220 +399,149 @@
   </div>
 
   <script>
-    const music = document.getElementById("bgMusic");
+  const music = document.getElementById("bgMusic");
 
-    const pages = [
-      { title: "Promise #1", text: `Ruchi... I promise I’ll always choose you. Even in chaos. Even in silence. Even in the hardest days. Always you.`, layout: "top-center", photos: ["photo1.jpg"] },
+  const pages = [
+    { title: "Promise #1", text: `Ruchi... I promise I’ll always choose you. Even in chaos. Even in silence. Even in the hardest days. Always you.`, layout: "top-center", photos: ["photo1.jpg"] },
 
-      { title: "Promise #2", text: `I promise to always listen. Not just to your words... But to your moods. Your eyes. Your silence. Because you deserve to be understood.`, layout: "side-right", photos: ["photo2.jpg"] },
+    { title: "Promise #2", text: `I promise to always listen. Not just to your words... But to your moods. Your eyes. Your silence. Because you deserve to be understood.`, layout: "side-right", photos: ["photo2.jpg"] },
 
-      { title: "Promise #3", text: `Ruchi, I promise to make you laugh. Even when life feels heavy. And yes... I’ll annoy you a little too 😌❤️`, layout: "bottom-left", photos: ["photo3.jpg"] },
+    { title: "Promise #3", text: `Ruchi, I promise to make you laugh. Even when life feels heavy. And yes... I’ll annoy you a little too 😌❤️`, layout: "bottom-left", photos: ["photo3.jpg"] },
 
-      { title: "Promise #4", text: `I promise to be proud of you. In every phase. In every version. Even when you doubt yourself... I won’t.`, layout: "side-left", photos: ["photo4.jpg"] },
+    { title: "Promise #4", text: `I promise to be proud of you. In every phase. In every version. Even when you doubt yourself... I won’t.`, layout: "side-left", photos: ["photo4.jpg"] },
 
-      { title: "Promise #5", text: `I promise to protect your peace. Not by controlling your world... But by being the calm inside it.`, layout: "top-center", photos: ["photo5.jpg", "photo6.jpg"] },
+    { title: "Promise #5", text: `I promise to protect your peace. Not by controlling your world... But by being the calm inside it.`, layout: "top-center", photos: ["photo5.jpg", "photo6.jpg"] },
 
-      { title: "Promise #6", text: `Ruchi... I promise that your happiness will never feel like a burden to me. I want to be part of it.`, layout: "bottom-right", photos: ["photo7.jpg"] },
+    { title: "Promise #6", text: `Ruchi... I promise that your happiness will never feel like a burden to me. I want to be part of it.`, layout: "bottom-right", photos: ["photo7.jpg"] },
 
-      { title: "Promise #7", text: `I promise I’ll stay. Not only when things are cute... But also when things are messy. Because love is not temporary.`, layout: "side-right", photos: ["photo8.jpg"] },
+    { title: "Promise #7", text: `I promise I’ll stay. Not only when things are cute... But also when things are messy. Because love is not temporary.`, layout: "side-right", photos: ["photo8.jpg"] },
 
-      { title: "Promise #8", text: `I promise to hold your hand. In public. In private. In every storm. Ruchi, you won’t walk alone.`, layout: "top-center", photos: ["photo9.jpg"] },
+    { title: "Promise #8", text: `I promise to hold your hand. In public. In private. In every storm. Ruchi, you won’t walk alone.`, layout: "top-center", photos: ["photo9.jpg"] },
 
-      { title: "Promise #9", text: `I promise to love you softly. Not loudly. Not dramatically. But in a way that feels safe. And forever.`, layout: "bottom-left", photos: ["photo10.jpg"] },
+    { title: "Promise #9", text: `I promise to love you softly. Not loudly. Not dramatically. But in a way that feels safe. And forever.`, layout: "bottom-left", photos: ["photo10.jpg"] },
 
-      { title: "Promise #10", text: `Ruchi...My final promise is simple: I will never stop loving you. Not today. Not tomorrow. Not in any lifetime. — Yours, Yash ❤️`, layout: "two-photos", photos: ["photo11.jpg", "photo12.jpg"] },
+    { title: "Promise #10", text: `Ruchi...My final promise is simple: I will never stop loving you. Not today. Not tomorrow. Not in any lifetime. — Yours, Yash ❤️`, layout: "two-photos", photos: ["photo11.jpg", "photo12.jpg"] },
 
-      { title: "", text: "", layout: "blank", photos: [] },
-      { title: "", text: "", layout: "blank", photos: [] },
-      { title: "", text: "", layout: "blank", photos: [] },
+    { title: "", text: "", layout: "blank", photos: [] },
+    { title: "", text: "", layout: "blank", photos: [] },
+    { title: "", text: "", layout: "blank", photos: [] },
 
-      { title: "", text: `More promises will be written soon… ✍️❤️`, layout: "top-center", photos: [] }
-    ];
+    { title: "", text: `More promises will be written soon… ✍️❤️`, layout: "top-center", photos: [] }
+  ];
 
-    // Spreads: each spread = [leftPageIndex, rightPageIndex]
-    // Spread 1: left blank, right = Promise #1
-    // Spread 2: left = Promise #2, right = Promise #3
-    // ...
-    const spreads = [];
-    spreads.push([null, 0]); // first spread: left blank, right promise #1
-
-    let i = 1;
-    while (i < pages.length) {
-      spreads.push([i, i + 1]);
-      i += 2;
+  function buildPageHTML(pageObj) {
+    if (!pageObj || pageObj.layout === "blank") {
+      return `<div class="page-inner"></div>`;
     }
 
-    let currentSpread = 0;
-    let flipping = false;
+    let photosHTML = "";
 
-    const leftContent = document.getElementById("leftContent");
-    const rightContent = document.getElementById("rightContent");
-
-    const flipPage = document.getElementById("flipPage");
-    const flipFrontContent = document.getElementById("flipFrontContent");
-    const flipBackContent = document.getElementById("flipBackContent");
-
-    const indicator = document.getElementById("pageIndicator");
-
-    function buildPageHTML(pageObj) {
-      if (!pageObj || pageObj.layout === "blank") {
-        return `<div style="height:100%;"></div>`;
-      }
-
-      let layoutClass = "";
-      if (pageObj.layout === "top-center") layoutClass = "layout-top-center";
-      if (pageObj.layout === "side-right") layoutClass = "layout-side-right";
-      if (pageObj.layout === "side-left") layoutClass = "layout-side-left";
-      if (pageObj.layout === "bottom-left") layoutClass = "layout-bottom-left";
-      if (pageObj.layout === "bottom-right") layoutClass = "layout-bottom-right";
-      if (pageObj.layout === "two-photos") layoutClass = "layout-two-photos";
-
-      let photosHTML = "";
-
-      if (pageObj.photos.length === 1) {
-        photosHTML = `
-          <div class="photo-wrap" style="transform: rotate(${Math.random() * 6 - 3}deg);">
-            <img class="photo" src="${pageObj.photos[0]}" alt="memory">
-          </div>
-        `;
-      }
-
-      if (pageObj.photos.length === 2) {
-        photosHTML = `
-          <div class="photo-wrap" style="transform: rotate(5deg);">
-            <img class="photo" src="${pageObj.photos[0]}" alt="memory">
-          </div>
-          <div class="photo-wrap second" style="transform: rotate(-6deg);">
-            <img class="photo small" src="${pageObj.photos[1]}" alt="memory">
-          </div>
-        `;
-      }
-
-      return `
-        <div class="${layoutClass}" style="height:100%; display:flex; flex-direction:column;">
-          <div class="page-title">${pageObj.title}</div>
-
-          ${pageObj.layout === "side-right" || pageObj.layout === "side-left"
-            ? `
-              <div style="display:flex; gap:18px; flex:1;">
-                ${pageObj.layout === "side-left" ? photosHTML : ""}
-                <div class="page-text">${pageObj.text}</div>
-                ${pageObj.layout === "side-right" ? photosHTML : ""}
-              </div>
-            `
-            : `
-              ${pageObj.layout === "top-center" ? photosHTML : ""}
-              <div class="page-text">${pageObj.text}</div>
-              ${pageObj.layout === "bottom-left" || pageObj.layout === "bottom-right" || pageObj.layout === "two-photos"
-                ? photosHTML
-                : ""}
-            `
-          }
+    if (pageObj.photos.length === 1) {
+      photosHTML = `
+        <div class="photo-wrap" style="transform: rotate(${Math.random() * 6 - 3}deg); margin-bottom:18px;">
+          <img class="photo" src="${pageObj.photos[0]}" alt="memory">
         </div>
       `;
     }
 
-    function renderSpread(spreadIndex) {
-      const spread = spreads[spreadIndex];
-
-      const leftIndex = spread[0];
-      const rightIndex = spread[1];
-
-      leftContent.innerHTML = buildPageHTML(leftIndex !== null ? pages[leftIndex] : null);
-      rightContent.innerHTML = buildPageHTML(rightIndex !== null ? pages[rightIndex] : null);
-
-      indicator.innerText = `Spread ${spreadIndex + 1} / ${spreads.length}`;
+    if (pageObj.photos.length === 2) {
+      photosHTML = `
+        <div class="photo-wrap" style="transform: rotate(5deg); margin-bottom:18px;">
+          <img class="photo" src="${pageObj.photos[0]}" alt="memory">
+        </div>
+        <div class="photo-wrap" style="transform: rotate(-6deg); margin-bottom:18px;">
+          <img class="photo small" src="${pageObj.photos[1]}" alt="memory">
+        </div>
+      `;
     }
 
-    function nextSpread() {
-      if (flipping) return;
-      if (currentSpread >= spreads.length - 1) return;
+    let layoutHTML = "";
 
-      flipping = true;
-
-      // Prepare flip page animation
-      flipPage.style.display = "block";
-      flipPage.classList.remove("flipping");
-
-      // Front = current right page
-      flipFrontContent.innerHTML = rightContent.innerHTML;
-
-      // Back = next left page
-      const nextSpreadIndex = currentSpread + 1;
-      const nextLeftIndex = spreads[nextSpreadIndex][0];
-      flipBackContent.innerHTML = buildPageHTML(nextLeftIndex !== null ? pages[nextLeftIndex] : null);
-
-      // Animate
-      setTimeout(() => {
-        flipPage.classList.add("flipping");
-      }, 50);
-
-      setTimeout(() => {
-        currentSpread++;
-        renderSpread(currentSpread);
-
-        flipPage.style.display = "none";
-        flipping = false;
-      }, 950);
+    if (pageObj.layout === "side-right") {
+      layoutHTML = `
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div style="flex:1;">
+            <div class="page-title">${pageObj.title}</div>
+            <div class="page-text">${pageObj.text}</div>
+          </div>
+          <div>${photosHTML}</div>
+        </div>
+      `;
+    } 
+    else if (pageObj.layout === "side-left") {
+      layoutHTML = `
+        <div style="display:flex; gap:14px; align-items:flex-start;">
+          <div>${photosHTML}</div>
+          <div style="flex:1;">
+            <div class="page-title">${pageObj.title}</div>
+            <div class="page-text">${pageObj.text}</div>
+          </div>
+        </div>
+      `;
+    } 
+    else {
+      layoutHTML = `
+        <div class="page-title">${pageObj.title}</div>
+        ${pageObj.layout === "top-center" ? photosHTML : ""}
+        <div class="page-text">${pageObj.text}</div>
+        ${pageObj.layout === "bottom-left" || pageObj.layout === "bottom-right" || pageObj.layout === "two-photos" ? photosHTML : ""}
+      `;
     }
 
-    function prevSpread() {
-      if (flipping) return;
-      if (currentSpread <= 0) return;
+    return `<div class="page-inner">${layoutHTML}</div>`;
+  }
 
-      // For simplicity, no reverse flip animation (still smooth)
-      currentSpread--;
-      renderSpread(currentSpread);
-    }
+  let pageFlip;
 
-    function openDiary() {
-      document.getElementById("coverScreen").style.display = "none";
-      document.getElementById("bookWrapper").style.display = "block";
+  function renderBook() {
+    const container = document.getElementById("bookContainer");
+    container.innerHTML = "";
 
-      renderSpread(currentSpread);
-
-      // Try autoplay music (will work after click)
-      music.play().catch(() => {});
-    }
-
-    /* ---------- SWIPE SUPPORT ---------- */
-    let startX = 0;
-    let endX = 0;
-
-    document.getElementById("bookWrapper").addEventListener("touchstart", (e) => {
-      startX = e.touches[0].clientX;
+    pages.forEach((p) => {
+      const pageDiv = document.createElement("div");
+      pageDiv.className = "page";
+      pageDiv.innerHTML = buildPageHTML(p);
+      container.appendChild(pageDiv);
     });
 
-    document.getElementById("bookWrapper").addEventListener("touchend", (e) => {
-      endX = e.changedTouches[0].clientX;
-
-      if (startX - endX > 60) {
-        nextSpread();
-      } else if (endX - startX > 60) {
-        prevSpread();
-      }
+    pageFlip = new St.PageFlip(container, {
+      width: 420,
+      height: 520,
+      size: "stretch",
+      minWidth: 300,
+      maxWidth: 900,
+      minHeight: 420,
+      maxHeight: 650,
+      maxShadowOpacity: 0.35,
+      showCover: true,
+      mobileScrollSupport: false,
+      useMouseEvents: true
     });
 
-    /* ---------- DESKTOP SWIPE (mouse drag) ---------- */
-    let mouseDown = false;
+    pageFlip.loadFromHTML(document.querySelectorAll("#bookContainer .page"));
 
-    document.getElementById("bookWrapper").addEventListener("mousedown", (e) => {
-      mouseDown = true;
-      startX = e.clientX;
+    pageFlip.on("flip", (e) => {
+      document.getElementById("pageIndicator").innerText =
+        `Page ${e.data + 1} / ${pages.length}`;
     });
+  }
 
-    document.getElementById("bookWrapper").addEventListener("mouseup", (e) => {
-      if (!mouseDown) return;
-      mouseDown = false;
+  function goNext() {
+    if (pageFlip) pageFlip.flipNext();
+  }
 
-      endX = e.clientX;
+  function goPrev() {
+    if (pageFlip) pageFlip.flipPrev();
+  }
 
-      if (startX - endX > 80) {
-        nextSpread();
-      } else if (endX - startX > 80) {
-        prevSpread();
-      }
-    });
+  function openDiary() {
+    document.getElementById("coverScreen").style.display = "none";
+    document.getElementById("bookWrapper").style.display = "block";
+
+    renderBook();
+
+    music.play().catch(() => {});
+  }
   </script>
 
 </body>
